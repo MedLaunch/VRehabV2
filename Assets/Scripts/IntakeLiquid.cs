@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class IntakeLiquid : MonoBehaviour
 {
     // Start is called before the first frame update
-    // public TextMeshProUGUI liquidCount;
     public Text liquidCount;
     public int liquid = 0;
     int oldLiquid = 0;

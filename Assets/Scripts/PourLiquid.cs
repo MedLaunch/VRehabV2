@@ -9,18 +9,18 @@ public class PourLiquid : MonoBehaviour
     void Start()
     {
         part = GetComponent<ParticleSystem>();
-        //part.transform.rotation = this.transform.rotation;
+        part.transform.rotation = this.transform.rotation;
         part.Stop();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //part.transform.rotation = this.transform.rotation;
+        part.transform.rotation = this.transform.rotation;
         bool drip = false;
         bool oldDrip = false;
         //if(Mathf.Abs(this.transform.rotation.z) >= 90 || Mathf.Abs(part.transform.rotation.x) >= 90)
-        if (Vector3.Dot(transform.up, Vector3.down) < 0)
+        if (Vector3.Dot(transform.up, Vector3.down) > 0)
         {
             drip = true;
         }

@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectQueue : MonoBehaviour {
+    TableController tableController;
     Queue<GameObject> objectQ = new Queue<GameObject>();
-    bool getNextObject = true;
+    bool getNextObject;
 
     // Start is called before the first frame update
     void Start() {
+        tableController = GameObject.Find("Table").GetComponent<TableController>();
         foreach (Transform child in transform) {
             child.gameObject.SetActive(false);
             objectQ.Enqueue(child.gameObject);
         }
+        getNextObject = objectQ.Count != 0;
     }
 
-    // Update is called once per frame
-    void Update() {
-        if (getNextObject && objectQ.Count != 0) {
-            getNextObject = false;
+    public GameObject GetNextObject() {
+        if (objectQ.Count != 0) {
             GameObject currObject = objectQ.Dequeue();
             currObject.SetActive(true);
+            return currObject;
+        } else {
+            return null;
         }
-    }
-
-    public void SetGetNextObject(bool getNext) {
-        getNextObject = getNext;
     }
 }
