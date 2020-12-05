@@ -36,6 +36,7 @@ public class TableController : MonoBehaviour {
     private bool timerIsRunning = false;
 
     private float t = 0f;
+    bool placed = false;
 
     // Start is called before the first frame update
 
@@ -84,8 +85,11 @@ public class TableController : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Food"))
+        if (other.CompareTag("Food") && !placed) {
             ScorePoint();
+            placed = true;
+        }
+            
     }
 
     void ScorePoint() {
@@ -115,6 +119,7 @@ public class TableController : MonoBehaviour {
         RandomizeOutlinePosition();
         t = 0;
         inScore = false;
+        placed = false;
     }
 
     IEnumerator FadeOut() {
