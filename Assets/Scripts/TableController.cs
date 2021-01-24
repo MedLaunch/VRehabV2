@@ -85,7 +85,6 @@ public class TableController : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        triggerText.text += "1";
         if (other.CompareTag("Food") && !placed) {
             CheckPosition(other.gameObject);
             // ScorePoint();
@@ -99,9 +98,8 @@ public class TableController : MonoBehaviour {
         Vector2 objectPos = new Vector2(other.transform.position.x, other.transform.position.z);
         float dist = Vector2.Distance(outlinePos, objectPos);
         triggerText.text += dist.ToString();
-        if (dist < 0.2f) {
+        if (dist < 0.5f) {
             ScorePoint();
-            triggerText.text += "2";
         }
     }
 
