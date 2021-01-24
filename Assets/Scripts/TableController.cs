@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class TableController : MonoBehaviour {
@@ -38,9 +39,8 @@ public class TableController : MonoBehaviour {
     private float t = 0f;
     bool placed = false;
 
+    public Text triggerText;
     // Start is called before the first frame update
-
-
     void Start() {
         // timer.text = "Time: " + remainingTime.ToString();
         outlineRender = outline.GetComponent<SpriteRenderer>();
@@ -85,11 +85,24 @@ public class TableController : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
+        triggerText.text += "1";
         if (other.CompareTag("Food") && !placed) {
-            ScorePoint();
+            CheckPosition(other.gameObject);
+            // ScorePoint();
             placed = true;
         }
             
+    }
+
+    private void CheckPosition(GameObject other) {
+        Vector2 outlinePos = new Vector2(outline.transform.position.x, outline.transform.position.z);
+        Vector2 objectPos = new Vector2(other.transform.position.x, other.transform.position.z);
+        float dist = Vector2.Distance(outlinePos, objectPos);
+        triggerText.text += dist.ToString();
+        if (dist < 0.2f) {
+            ScorePoint();
+            triggerText.text += "2";
+        }
     }
 
     void ScorePoint() {
@@ -144,7 +157,8 @@ public class TableController : MonoBehaviour {
         currentOutlineBounds = outline.GetComponent<Collider>();
         //if (currentFood != null) {
         //    Vector3 up = new Vector3(0f, 1f, 0f);
-        //    currentFood.transform.position = outline.transform.position + up;
+        //    Vector3 left = new Vector3(0.3f, 0f, 0f);
+        //    currentFood.transform.position = outline.transform.position + up + left;
         //}
     }
 }

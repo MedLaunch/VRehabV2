@@ -9,7 +9,7 @@ public class ObjectQueue : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        tableController = GameObject.Find("Table").GetComponent<TableController>();
+        tableController = GameObject.Find("Table Top").GetComponent<TableController>();
         foreach (Transform child in transform) {
             child.gameObject.SetActive(false);
             objectQ.Enqueue(child.gameObject);

@@ -13,6 +13,7 @@ public class IntakeLiquid : MonoBehaviour
     int currentIndex;
     float interval = 0f;
     float step = 1.5f;
+    float currTime = 0f;
     void Start()
     {
         bool skipFirst = transform.childCount > 4;
@@ -25,6 +26,7 @@ public class IntakeLiquid : MonoBehaviour
         }
         liquidCount.gameObject.SetActive(true);
         SetLiquidCount();
+        Debug.Log(children.Length);
     }
 
     // Update is called once per frame
@@ -45,10 +47,11 @@ public class IntakeLiquid : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        if (Time.time - interval > step && liquid != 3)
+        currTime += Time.deltaTime;
+        if (currTime > step && liquid != 3)
         {
             liquid++;
-            interval = Time.time;
+            currTime = 0f;
         }
     }
     void ChangeLiquid()
