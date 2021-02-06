@@ -22,6 +22,8 @@ public class Launch : MonoBehaviour
     Vector3 launch;
     Vector3 torque;
 
+    AudioSource pointSound;
+
     // Transforms to act as start and end markers for the journey.
     //public Transform startMarker;
     //public Transform endMarker;
@@ -57,6 +59,7 @@ public class Launch : MonoBehaviour
         //startTime = Time.time;
         scoreText.gameObject.SetActive(true);
         SetScoreText();
+        pointSound = GetComponent<AudioSource>();
 
         // Calculate the journey length.
         //journeyLength = Vector3.Distance(startMarker.position, endMarker.position);
@@ -136,6 +139,7 @@ public class Launch : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
+        pointSound.PlayOneShot(pointSound.clip);
         if (Time.time - scoreInterval > stepScoreInit)  // Stops update from overcounting
         {
             // Start step at 0 initially or else a quick score will not register 

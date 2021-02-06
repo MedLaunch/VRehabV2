@@ -8,6 +8,9 @@ using TMPro;
 public class TableController : MonoBehaviour {
     public float speed = 0;
     public float remainingTime = 45;
+
+    AudioSource sound;
+
     //public TextMeshProUGUI scoreText;
     //public TextMeshProUGUI timer;
 
@@ -51,6 +54,7 @@ public class TableController : MonoBehaviour {
         RandomizeOutlinePosition();
         // winTextObject.SetActive(false);
         timerIsRunning = true;
+        sound = GetComponent<AudioSource>();
     }
 
     void Update() {
@@ -134,6 +138,8 @@ public class TableController : MonoBehaviour {
     }
 
     IEnumerator FadeOut() {
+        //sound.Play();
+        sound.PlayOneShot(sound.clip); 
         while (outlineRender.color.a > 0) {
             Color outColor = outlineRender.color;
             float fadeAmount = outColor.a - (0.05f * Time.deltaTime);
@@ -141,6 +147,7 @@ public class TableController : MonoBehaviour {
             outlineRender.color = outColor;
             yield return null;
         }
+        //sound.Stop();
     }
 
     public void SetCurrentFood(GameObject food) {
