@@ -8,6 +8,9 @@ TagManager:
   - Target
   - table
   - MenuButton
+  - lb_bird
+  - lb_groundTarget
+  - lb_perchTarget
   layers:
   - Default
   - TransparentFX

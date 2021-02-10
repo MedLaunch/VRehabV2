@@ -6,6 +6,8 @@ public class PourLiquid : MonoBehaviour
 {
     ParticleSystem part;
     private int wineScore;
+    public float totalTimeOut = 0f;  // total time liquid is poured
+
     void Start()
     {
         part = GetComponent<ParticleSystem>();
@@ -23,6 +25,7 @@ public class PourLiquid : MonoBehaviour
         if (Vector3.Dot(transform.up, Vector3.down) < 0)
         {
             drip = true;
+            totalTimeOut += Time.deltaTime;
         }
         else
         {
