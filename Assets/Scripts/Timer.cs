@@ -15,6 +15,14 @@ public class Timer : MonoBehaviour
             StartTimer();
     }
 
+    public float GetCurrentTime() {
+        return defaultTime;
+    }
+
+    public void ChangeTime(float deltaTime) {
+        defaultTime += deltaTime;
+    }
+
     public void StartTimer() {
         StartCoroutine(_StartTimer());
     }
