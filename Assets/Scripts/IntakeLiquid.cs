@@ -37,7 +37,7 @@ public class IntakeLiquid : MonoBehaviour
             ChangeLiquid();
             oldLiquid = liquid;
         }
-
+        SetLiquidCount();  // for debugging
     }
 
     void SetLiquidCount()
