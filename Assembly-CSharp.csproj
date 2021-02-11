@@ -228,6 +228,7 @@
     <Compile Include="Assets\Oculus\Spatializer\scripts\ONSPPropagationSettings.cs" />
     <Compile Include="Assets\Soja Exiles\SE Basic Assets\Scripts and Animations\Windows\opencloseWindow1.cs" />
     <Compile Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Scripts\CameraMotionBlur.cs" />
+    <Compile Include="Assets\Scripts\WineLevel.cs" />
     <Compile Include="Assets\Oculus\Avatar\Scripts\OvrAvatarSkinnedMeshRenderComponent.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\CowController.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\HandsTrainExample\Scripts\PanelHMDFollower.cs" />
@@ -266,8 +267,7 @@
     <Compile Include="Assets\Oculus\LipSync\Scripts\OVRLipSyncContextTextureFlip.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Usage\DebugUI\DebugUISample.cs" />
     <Compile Include="Assets\Oculus\SampleFramework\Core\HandsInteraction\Scripts\ButtonController.cs" />
-    <Compile Include="Assets\Scripts\WineLevel.cs" />
-    <Compile Include="Assets\Scripts\WineTable.cs" />
+    <Compile Include="Assets\Scripts\SliderValueToText.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />
