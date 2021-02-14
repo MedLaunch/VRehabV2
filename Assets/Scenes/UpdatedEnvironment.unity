@@ -10321,7 +10321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ffd11b3a005d8e4ca171d68a2dc9e81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  liquidCount: {fileID: 0}
+  liquidCount: {fileID: 1238945660}
   liquid: 0
 --- !u!65 &1108456457
 BoxCollider:

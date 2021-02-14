@@ -10,6 +10,8 @@ public class PourLiquid : MonoBehaviour {
 
     void Start() {
         part = GetComponent<ParticleSystem>();
+        part.transform.rotation = this.transform.rotation;
+
         part.Stop();
     }
 

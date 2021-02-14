@@ -7,8 +7,8 @@ public class IntakeLiquid : MonoBehaviour
 {
     // Start is called before the first frame update
     public Text liquidCount;
-    public int liquid = 0;
-    int oldLiquid = 0;
+    public double liquid = 0;
+    double oldLiquid = 0;
     GameObject[] children;
     int currentIndex;
     float interval = 0f;
@@ -26,7 +26,7 @@ public class IntakeLiquid : MonoBehaviour
         }
         liquidCount.gameObject.SetActive(true);
         SetLiquidCount();
-        Debug.Log(children.Length);
+        //Debug.Log(children.Length);
     }
 
     // Update is called once per frame
@@ -42,7 +42,12 @@ public class IntakeLiquid : MonoBehaviour
 
     void SetLiquidCount()
     {
-        liquidCount.text = "Liquid Level: " + liquid.ToString();
+        liquidCount.text = "Filled: " + GetFillPercent().ToString() + "%";
+    }
+
+    int GetFillPercent()
+    {
+        return (int) (liquid / (children.Length) * 100);
     }
 
     void OnParticleCollision(GameObject other)
