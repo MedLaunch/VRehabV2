@@ -9946,6 +9946,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4686848209917010952, guid: e32f2e76bad645746b596640d4736354, type: 3}
+      propertyPath: liquidCount
+      value: 
+      objectReference: {fileID: 1238945660}
     - target: {fileID: 5368408178052842995, guid: e32f2e76bad645746b596640d4736354, type: 3}
       propertyPath: m_IsActive
       value: 0

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3570108910386422610}
   - component: {fileID: 2095612912021213601}
   - component: {fileID: 5386460179535767111}
-  - component: {fileID: 3117162696310475812}
   - component: {fileID: 4199194554803402274}
+  - component: {fileID: 4686848209917010952}
   m_Layer: 8
   m_Name: Wine Level Object
   m_TagString: Untagged
@@ -101,23 +101,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &3117162696310475812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 743908513036344259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 631b388c6a25e7e44b76dc6432dc5bb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  percentText: {fileID: 0}
-  percent: 0
-  totalTimeOut: 0
-  totalTimeLanded: 0
-  drip: 0
 --- !u!54 &4199194554803402274
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -134,6 +117,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4686848209917010952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743908513036344259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ffd11b3a005d8e4ca171d68a2dc9e81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  liquidCount: {fileID: 0}
+  liquid: 0
 --- !u!1 &4167646210237042549
 GameObject:
   m_ObjectHideFlags: 0
