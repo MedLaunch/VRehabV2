@@ -669,25 +669,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8650216110342141105, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
   m_PrefabInstance: {fileID: 8650216110816843938}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &309610377 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 743908513036344259, guid: e32f2e76bad645746b596640d4736354, type: 3}
-  m_PrefabInstance: {fileID: 1439700781}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &309610379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 309610377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ffd11b3a005d8e4ca171d68a2dc9e81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  liquidCount: {fileID: 184399740}
-  liquid: 0
 --- !u!43 &363569344
 Mesh:
   m_ObjectHideFlags: 0
@@ -1956,6 +1937,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 196082423618184195, guid: e32f2e76bad645746b596640d4736354, type: 3}
+      propertyPath: liquidCount
+      value: 
+      objectReference: {fileID: 184399740}
     - target: {fileID: 487453689060183626, guid: e32f2e76bad645746b596640d4736354, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.003087
