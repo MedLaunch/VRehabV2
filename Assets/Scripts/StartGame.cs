@@ -6,8 +6,91 @@ using UnityEngine.UI;
 public class StartGame : MonoBehaviour
 {
     public Text timer;
+    public Slider slider;
+
+    private TableController tableScript;
+    private Settings settingsScript;
+
+    private Timer timerScript;
+
+    // 0 is paused, 1 is playing
+    private int gameStatus;
+
+    private bool waitForPlayer = false;
 
     public void Play() {
-        timer.text += "Button pressed";
+        timerScript.StartTimer();
+        gameStatus = 1;
+        tableScript.SetGameStatus(true);
+        tableScript.ToggleOutlineVisibility(true);
+        tableScript.SetCurrentFood();
+        Debug.Log("Set square to visible");   
     }
+
+    public void Pause(){
+        if(tableScript.GetGameStatus()){
+            gameStatus = 0;
+            tableScript.SetGameStatus(false);
+            timerScript.isPaused = true;
+        }
+    }
+
+    public void Continue(){
+        if(!tableScript.GetGameStatus()){
+            gameStatus = 1;
+            tableScript.SetGameStatus(true);
+            timerScript.isPaused = false;
+        }
+    }
+    
+    public void GameOver(){
+        gameStatus = 0;
+        tableScript.SetGameStatus(false);
+        timerScript.isPaused = true;
+        tableScript.ResetGame();
+        waitForPlayer = true;
+    }
+    void Start(){
+        tableScript = GameObject.Find("Table Top").GetComponent<TableController>();
+        settingsScript = gameObject.GetComponent<Settings>();
+        timerScript = gameObject.GetComponent<Timer>();
+        timerScript.defaultTime = 30f;
+        gameStatus = 0;
+    }
+    void Update(){
+        // For testing purposes
+        if(Input.GetKeyDown(KeyCode.LeftArrow)){
+            Play();
+        } else if(Input.GetKeyDown(KeyCode.RightArrow)){
+            if(timerScript.isPaused){
+                Continue();
+            } else {
+                Pause();
+            }
+        } else if(Input.GetKeyDown(KeyCode.UpArrow)){
+            settingsScript.IncreaseTime();
+        } else if(Input.GetKeyDown(KeyCode.DownArrow)){
+            settingsScript.DecreaseTime();
+        } else if(Input.GetKeyDown(KeyCode.LeftBracket)){
+            settingsScript.DecreaseNumFood();
+        } else if(Input.GetKeyDown(KeyCode.RightBracket)){
+            settingsScript.IncreaseNumFood();
+        } else if(Input.GetKeyDown(KeyCode.Comma)){
+            settingsScript.DecreaseDifficulty();
+        } else if(Input.GetKeyDown(KeyCode.Period)){
+            settingsScript.IncreaseDifficulty();
+        } else if(Input.GetKeyDown(KeyCode.Q)){
+            tableScript.TestFood();
+        }
+
+        // make this only happen once
+        if(!waitForPlayer && tableScript.GetGameOver() || timerScript.GetGameStatus()){
+            GameOver();
+        }
+    }
+
+    public void SetGameStatus(int status){
+        gameStatus = status;
+    }
+
 }

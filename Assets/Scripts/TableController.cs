@@ -3,95 +3,98 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using static System.InvalidOperationException;
+using System.Threading.Tasks;
 
 public class TableController : MonoBehaviour {
-    public float speed = 0;
-    public float remainingTime = 45;
 
     AudioSource sound;
 
-    //public TextMeshProUGUI scoreText;
-    //public TextMeshProUGUI timer;
+    private int difficulty;
 
-    //public GameObject winTextObject;
-
-    //public GameObject loseObject;
     public GameObject toast;
     public float xMax;
     public float zMax;
     public GameObject outline;
 
-    ObjectQueue objectQueue;
+    public Text pointText;
+
+    public ObjectQueue objectQueue;
     private Collider currentOutlineBounds;
 
     private SpriteRenderer outlineRender;
-    Queue<GameObject> food = new Queue<GameObject>();
 
     private GameObject currentFood;
-    // private Rigidbody rb;
-
-    private float movementX;
-    private float movementY;
 
     private int score;
     private bool gameOver = false;
     private bool inScore = false;
     private bool timerIsRunning = false;
 
-    private float t = 0f;
     bool placed = false;
 
-    public Text triggerText;
+    private float yHeight;
+
+    private int numFood = 6;
+
     // Start is called before the first frame update
-    void Start() {
-        // timer.text = "Time: " + remainingTime.ToString();
+    public void Start() {
         outlineRender = outline.GetComponent<SpriteRenderer>();
         objectQueue = GameObject.Find("Foods").GetComponent<ObjectQueue>();
-        // loseObject.SetActive(false);
-        outline.SetActive(false);
-        currentFood = objectQueue.GetNextObject();
+        yHeight = outline.transform.position.y;
         RandomizeOutlinePosition();
-        // winTextObject.SetActive(false);
-        timerIsRunning = true;
+        outline.SetActive(false);
         sound = GetComponent<AudioSource>();
     }
+    
+    public void AddFood(){
+        numFood += 1;
+        objectQueue.AddObject();
+    }
 
-    void Update() {
-        if (currentFood != null) {
-            Vector3 modifiedPosition = currentFood.transform.position;
-            modifiedPosition.y = gameObject.transform.position.y + 0.1f;
-
-            if (timerIsRunning) {
-                if (remainingTime > 0) {
-                    remainingTime -= Time.deltaTime;
-                    if (remainingTime < 10) {
-                        // timer.color = Color.red;
-                    }
-                }
-                else {
-                    timerIsRunning = false;
-                    remainingTime = 0;
-                    gameOver = true;
-                    // loseObject.SetActive(true);
-                    inScore = false;
-                    Debug.Log("here");
-                }
-
-                // timer.text = "Time: " + Mathf.FloorToInt(remainingTime).ToString();
-            }
-
-            if (inScore) {
-                StartCoroutine(FadeOut());
+    public void RemoveFood(){
+        if(objectQueue.GetCount() > 1){
+            numFood -= 1;
+            currentFood = objectQueue.GetNextObject();
+            if(!currentFood.activeSelf){
+                currentFood.SetActive(false);
             }
         }
-        
+    }
+
+    public int GetNumFood(){
+        return numFood;
+    }
+    public void ToggleOutlineVisibility(bool visible){
+        outline.SetActive(visible);
+    }
+    void Update() {
+        if(timerIsRunning){
+            if (currentFood != null) {
+                Vector3 modifiedPosition = currentFood.transform.position;
+                modifiedPosition.y = gameObject.transform.position.y + 0.1f;
+                if (inScore) {
+                    StartCoroutine(FadeOut());
+                }
+            }
+        }     
+    }
+    
+    public void SetGameStatus(bool status){
+        timerIsRunning = status;
+    }
+    
+    public bool GetGameStatus(){
+        return timerIsRunning;
+    }
+
+    public bool GetGameOver(){
+        return gameOver;
     }
 
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Food") && !placed) {
             CheckPosition(other.gameObject);
-            // ScorePoint();
             placed = true;
         }
             
@@ -101,43 +104,55 @@ public class TableController : MonoBehaviour {
         Vector2 outlinePos = new Vector2(outline.transform.position.x, outline.transform.position.z);
         Vector2 objectPos = new Vector2(other.transform.position.x, other.transform.position.z);
         float dist = Vector2.Distance(outlinePos, objectPos);
-        triggerText.text += dist.ToString();
-        if (dist < 0.5f) {
-            ScorePoint();
+        float distance = 0.5f;
+        if(difficulty == 0){
+            distance = 0.7f;
+        } else if(difficulty == 1){
+            distance = 0.5f;
+        } else if(difficulty == 2){
+            distance = 0.3f;
+        } else {
+            distance = 0.1f;
+        }
+        if (dist < distance){
+            ScorePoint(dist);
         }
     }
 
-    void ScorePoint() {
-        score += 1;
+    public void SetDifficulty(int level){
+        difficulty = level;
+    }
+    void ScorePoint(float distance) {
+        score += (int)((1 / distance) * 100);
+        pointText.text = "Points: " + score.ToString();
         inScore = true;
-        // scoreText.text = "Items Placed: " + score.ToString();
         outlineRender.color = Color.green;
 
         GameObject temp = currentFood;
         currentFood = objectQueue.GetNextObject();
+        Debug.Log(currentFood);
         if (currentFood != null) {
-            // remove food item for next one
             StartCoroutine(Create(temp));
         } else {
-            // winTextObject.SetActive(true);
+            temp.SetActive(false);
+            Destroy(temp);
             timerIsRunning = false;
-            // timer.color = Color.green;
             gameOver = true;
             inScore = false;
         }
     }
 
-    IEnumerator Create(GameObject temp) {
-        yield return new WaitForSeconds(1);
+    IEnumerator Create(GameObject temp){
+        yield return new WaitForSeconds(0.2f);
+        temp.SetActive(false);
         Destroy(temp);
         outlineRender.color = Color.white;
         RandomizeOutlinePosition();
-        t = 0;
         inScore = false;
         placed = false;
     }
 
-    IEnumerator FadeOut() {
+    IEnumerator FadeOut(){
         //sound.Play();
         sound.PlayOneShot(sound.clip); 
         while (outlineRender.color.a > 0) {
@@ -153,17 +168,32 @@ public class TableController : MonoBehaviour {
     public void SetCurrentFood(GameObject food) {
         currentFood = food;
     }
-
+    public void SetCurrentFood(){
+        currentFood = objectQueue.GetNextObject();
+    }
     void RandomizeOutlinePosition() {
         float x = Random.Range(transform.position.x - xMax, transform.position.x + xMax);
         float z = Random.Range(transform.position.z - zMax, transform.position.z + zMax);
-        outline.transform.position = new Vector3(x, transform.position.y + 0.01f, z);
+        outline.transform.position = new Vector3(x, yHeight + 0.01f, z);
         outline.SetActive(true);
         currentOutlineBounds = outline.GetComponent<Collider>();
-        //if (currentFood != null) {
-        //    Vector3 up = new Vector3(0f, 1f, 0f);
-        //    Vector3 left = new Vector3(0.3f, 0f, 0f);
-        //    currentFood.transform.position = outline.transform.position + up + left;
-        //}
+    }
+
+    public void TestFood(){
+        if(currentFood != null){
+            Vector3 up = new Vector3(0f,1f,0f);
+            Vector3 left = new Vector3(0.2f, 0f, 0f);
+            currentFood.transform.position = outline.transform.position + up + left;
+        }
+    }
+
+    public void ResetGame(){
+        Debug.Log("Resetting game");
+        objectQueue.ResetQueue();
+        Debug.Log(currentFood);
+        if(currentFood != null){
+            currentFood.SetActive(false);
+        }
+        outline.SetActive(false);
     }
 }
