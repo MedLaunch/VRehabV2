@@ -57,4 +57,9 @@ public class Timer : MonoBehaviour
     public bool GetGameStatus(){
         return isGameDone;
     }
+
+    public void SetPaused(bool paused)
+    {
+        isPaused = paused;
+    }
 }
