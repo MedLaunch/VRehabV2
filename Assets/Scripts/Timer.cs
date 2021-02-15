@@ -8,7 +8,15 @@ public class Timer : MonoBehaviour
     public float defaultTime = 30f;
     public Text timerText;
 
+    public bool isPaused;
+    public bool isGameDone;
+
     // Update is called once per frame
+
+    void Start(){
+        isPaused = false;
+        isGameDone = false;
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
@@ -30,16 +38,23 @@ public class Timer : MonoBehaviour
     IEnumerator _StartTimer() {
         float currTime = defaultTime;
         while (currTime > 0) {
-            currTime -= Time.deltaTime;
+            if(!isPaused){
+                currTime -= Time.deltaTime;
+            }
             DisplayTime(currTime);
             yield return null;
         }
         timerText.text = "Time: Done!";
+        isGameDone = true;
     }
 
     private void DisplayTime(float time) {
         time += 1;
         float seconds = Mathf.FloorToInt(time);
         timerText.text = "Time: " + seconds.ToString();
+    }
+
+    public bool GetGameStatus(){
+        return isGameDone;
     }
 }
