@@ -9755,7 +9755,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 5
+          m_FloatArgument: 1
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -10000,14 +10000,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 141307366}
     m_Modifications:
-    - target: {fileID: 196082423618184195, guid: e32f2e76bad645746b596640d4736354, type: 3}
-      propertyPath: liquidCount
-      value: 
-      objectReference: {fileID: 1238945660}
-    - target: {fileID: 743908513036344259, guid: e32f2e76bad645746b596640d4736354, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4167646210236683093, guid: e32f2e76bad645746b596640d4736354, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -12499,7 +12491,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: -5
+          m_FloatArgument: -1
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -13140,7 +13132,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-15836
+  m_Name: pb_Mesh-5930
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14785,7 +14777,6 @@ GameObject:
   - component: {fileID: 2076354417}
   - component: {fileID: 2076354419}
   - component: {fileID: 2076354418}
-  - component: {fileID: 2076354420}
   m_Layer: 5
   m_Name: Text (3)
   m_TagString: Untagged
@@ -14854,19 +14845,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076354416}
   m_CullTransparentMesh: 0
---- !u!114 &2076354420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2076354416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 864926b325e0bca4ebf0b9dd8b0a5d06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sliderUI: {fileID: 292549676}
 --- !u!1001 &2092568477
 PrefabInstance:
   m_ObjectHideFlags: 0
