@@ -79,6 +79,14 @@ public class IntakeLiquid : MonoBehaviour
             SetLiquidCount();
         }
     }
+    public bool GetFull()
+    {
+        if(liquid == 3)
+        {
+            return true;
+        }
+        return false;
+    }
 }
 
 // in start
