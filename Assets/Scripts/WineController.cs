@@ -62,7 +62,7 @@ public class WineController : MonoBehaviour
     {
         if (playClicked)
         {
-            if (CheckLost()) { break; }
+            // if (CheckLost()) { break; }
             if (!glassSpawned)
             {
                 clone = Instantiate(glass, spawn.position, spawn.rotation);  // Spawns gameObject

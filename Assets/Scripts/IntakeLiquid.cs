@@ -53,7 +53,7 @@ public class IntakeLiquid : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        timeIn += timeIn.deltaTime;
+        timeIn += Time.deltaTime;
         currTime += Time.deltaTime;
         if (currTime > step && liquid != 3)
         {
