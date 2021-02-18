@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class WineController : MonoBehaviour
 {
     public int glassesLeft;
+    public float totalTimeIn = 0f;
+    private bool playClicked = false;  // determine if update() should be running
     public Slider sliderUI;  // get glassesLeft
     public Text displayGame;  // win or lose
     public Text glassesLeftText;  // show glassesLeft
@@ -18,62 +20,31 @@ public class WineController : MonoBehaviour
     bool glassSpawned = false;
     bool lost = false;
     private GameObject pouringWine;
-    // Start is called before the first frame update
+
     void Start()
-    {// is this called when the run button is clicked or every time play clicked?
+    {
         //displayGame = GetComponent<Text>();
         //glassLeftText = GetComponent<Text>();
         pouringWine = GameObject.Find("Pouring Wine");
         glass.SetActive(false);  // disable initial glass
         SetGlassesLeft();
         SetGlassesText();
-
-        //clone = Instantiate(glass, spawn.position, spawn.rotation);  // Spawns gameObject
-        //clone.SetActive(true);
-        //rb = clone.GetComponent<Rigidbody>();
     }
     public void StartWine()
     {
-        do // always spawn a glass
-        {
-            if (CheckLost()) { break; }
-            if (!glassSpawned)
-            {
-                clone = Instantiate(glass, spawn.position, spawn.rotation);  // Spawns gameObject
-                clone.SetActive(true);
-                //rb = clone.GetComponent<Rigidbody>();
-                script = clone.GetComponent<IntakeLiquid>();
-                glassSpawned = true;
-            }
-            if (glassSpawned && script.GetFull())
-            {
-                Destroy(clone);
-                glassSpawned = false;
-                glassesLeft--;
-                SetGlassesText();
-            }
-        } while (glassesLeft > 1);
-        // currently glassesLeft == 1 and last glass just spawned
-        while (!CheckLost())
-        {
-            IntakeLiquid script = clone.GetComponent<IntakeLiquid>();
-            if (script.GetFull())
-            {
-                glassesLeft--;
-                SetGlassesText();
-            }
-            // now glassesLeft == 0 and we won 
-        }
+        playClicked = true;
     }
     private bool CheckLost()  // returns true if game is won or lost
     {
         if(/*glassesLeft != 0 && */pouringWine.GetComponent<Timer>().GetGameStatus()) { 
             displayGame.text = "You Lost!";
+            playClicked = false;
             return true;
         }
         if (glassesLeft == 0 && !GetComponent<Timer>().GetGameStatus()) { 
             displayGame.text = "Congrats, you win!";
             pouringWine.GetComponent<Timer>().SetPaused(true);
+            playClicked = false;
             return true;
         }
         return false;
@@ -89,6 +60,38 @@ public class WineController : MonoBehaviour
     }
     void Update()
     {
+        if (playClicked)
+        {
+            if (CheckLost()) { break; }
+            if (!glassSpawned)
+            {
+                clone = Instantiate(glass, spawn.position, spawn.rotation);  // Spawns gameObject
+                clone.SetActive(true);
+                //rb = clone.GetComponent<Rigidbody>();
+                script = clone.GetComponent<IntakeLiquid>();
+                glassSpawned = true;
+            }
+            else if (script.GetFull())
+            {
+                // tell glass amount before destroying
+                totalTimeIn += script.GetTimeIn();
+                Destroy(clone);
+                glassSpawned = false;
+                glassesLeft--;
+                SetGlassesText();
+            }
 
+            // currently glassesLeft == 1 and last glass just spawned
+            if (glassesLeft == 1 && !CheckLost())
+            {
+                IntakeLiquid script = clone.GetComponent<IntakeLiquid>();
+                if (script.GetFull())
+                {
+                    glassesLeft--;
+                    SetGlassesText();
+                }
+                // now glassesLeft == 0 and we won 
+            }
+        }
     }
 }

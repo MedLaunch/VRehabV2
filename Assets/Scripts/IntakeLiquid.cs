@@ -14,6 +14,7 @@ public class IntakeLiquid : MonoBehaviour
     float interval = 0f;
     float step = 1.5f;
     float currTime = 0f;
+    public float timeIn = 0f;
     void Start()
     {
         bool skipFirst = transform.childCount > 4;
@@ -52,6 +53,7 @@ public class IntakeLiquid : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
+        timeIn += timeIn.deltaTime;
         currTime += Time.deltaTime;
         if (currTime > step && liquid != 3)
         {
@@ -86,6 +88,10 @@ public class IntakeLiquid : MonoBehaviour
             return true;
         }
         return false;
+    }
+    public float GetTimeIn()
+    {
+        return timeIn;
     }
 }
 

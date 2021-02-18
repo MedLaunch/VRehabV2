@@ -28,7 +28,6 @@ public class PourLiquid : MonoBehaviour {
     void FixedUpdate() {
         ParticleSystem.Particle[] particleList = new ParticleSystem.Particle[part.particleCount];
         int length = part.GetParticles(particleList);
-
     }
     void Pour(bool isPouring) {
         if (isPouring) {
@@ -36,5 +35,9 @@ public class PourLiquid : MonoBehaviour {
         } else {
             part.Stop();
         }
+    }
+    public float GetTimeOut()
+    {
+        return totalTimeOut;
     }
 }
