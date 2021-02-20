@@ -81,6 +81,8 @@ public class StartGame : MonoBehaviour
             settingsScript.IncreaseDifficulty();
         } else if(Input.GetKeyDown(KeyCode.Q)){
             tableScript.TestFood();
+        } else if (Input.GetKeyDown(KeyCode.A)) {
+            tableScript.RandomizeOutlinePosition();
         }
 
         // make this only happen once

@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Picnic Main.unity
     guid: 6a9c47c1a37f8864a9a2a10979dd5ba0
+  - enabled: 1
+    path: Assets/Scenes/UpdatedEnvironment.unity
+    guid: d52a4eaa5f2d84ed992fa2b55fd810f9
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 7278eab81f66547499695d5bd7413190, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8b475e3c3d326bd4eb162541efc22db8, type: 2}

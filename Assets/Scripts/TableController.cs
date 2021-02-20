@@ -171,7 +171,7 @@ public class TableController : MonoBehaviour {
     public void SetCurrentFood(){
         currentFood = objectQueue.GetNextObject();
     }
-    void RandomizeOutlinePosition() {
+    public void RandomizeOutlinePosition() {
         float x = Random.Range(transform.position.x - xMax, transform.position.x + xMax);
         float z = Random.Range(transform.position.z - zMax, transform.position.z + zMax);
         outline.transform.position = new Vector3(x, yHeight + 0.01f, z);
