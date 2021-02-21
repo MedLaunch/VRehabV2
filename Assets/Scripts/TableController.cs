@@ -93,7 +93,7 @@ public class TableController : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Food") && !placed) {
+        if (other.CompareTag("Food")) {
             CheckPosition(other.gameObject);
             placed = true;
         }
@@ -106,13 +106,13 @@ public class TableController : MonoBehaviour {
         float dist = Vector2.Distance(outlinePos, objectPos);
         float distance = 0.5f;
         if(difficulty == 0){
-            distance = 0.7f;
+            distance = 0.08f;
         } else if(difficulty == 1){
-            distance = 0.5f;
+            distance = 0.04f;
         } else if(difficulty == 2){
-            distance = 0.3f;
+            distance = 0.02f;
         } else {
-            distance = 0.1f;
+            distance = 0.01f;
         }
         if (dist < distance){
             ScorePoint(dist);
@@ -120,6 +120,10 @@ public class TableController : MonoBehaviour {
     }
 
     public void SetDifficulty(int level){
+        if (level < difficulty)
+            outline.transform.localScale += new Vector3(0.1f, 0.2f, 0);
+        if (level > difficulty)
+            outline.transform.localScale -= new Vector3(0.1f, 0.2f, 0);
         difficulty = level;
     }
     void ScorePoint(float distance) {
@@ -182,7 +186,7 @@ public class TableController : MonoBehaviour {
     public void TestFood(){
         if(currentFood != null){
             Vector3 up = new Vector3(0f,1f,0f);
-            Vector3 left = new Vector3(0.2f, 0f, 0f);
+            Vector3 left = new Vector3(0.022f, 0f, 0f);
             currentFood.transform.position = outline.transform.position + up + left;
         }
     }

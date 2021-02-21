@@ -75,13 +75,13 @@ public class Launch : MonoBehaviour
         //if (!lerp)
         //{
         // Launches projectile
-        if (Input.GetKey("space"))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             projectile.AddForce(launch);
             projectile.AddTorque(torque);
         }
         //Creates new projectile for launching
-        if (Input.GetKey("r"))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             // Interval makes one click = one action rather than length of click in milliseconds
             if (Time.time - interval > step) // Current time - Time of last action > spacing time                 
@@ -93,7 +93,7 @@ public class Launch : MonoBehaviour
                 projectile = clone.GetComponent<Rigidbody>();  // Gets rigidbody of new gameObject clone
             }
         }
-        if (Input.GetKey("f"))  // Delete object
+        if (Input.GetKeyDown(KeyCode.F))  // Delete object
         {
             // Interval makes one click = one action rather than length of click in milliseconds
             if (Time.time - interval > step) // Current time - Time of last action > spacing time                 
@@ -139,7 +139,7 @@ public class Launch : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        pointSound.PlayOneShot(pointSound.clip);
+        // pointSound.PlayOneShot(pointSound.clip);
         if (Time.time - scoreInterval > stepScoreInit)  // Stops update from overcounting
         {
             // Start step at 0 initially or else a quick score will not register 

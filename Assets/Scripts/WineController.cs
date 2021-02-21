@@ -20,6 +20,7 @@ public class WineController : MonoBehaviour
     bool glassSpawned = false;
     bool lost = false;
     private GameObject pouringWine;
+    Timer timerScript;
 
     void Start()
     {
@@ -29,10 +30,12 @@ public class WineController : MonoBehaviour
         glass.SetActive(false);  // disable initial glass
         SetGlassesLeft();
         SetGlassesText();
+        timerScript = GetComponent<Timer>();
     }
     public void StartWine()
     {
         playClicked = true;
+        timerScript.StartTimer();
     }
     private bool CheckLost()  // returns true if game is won or lost
     {

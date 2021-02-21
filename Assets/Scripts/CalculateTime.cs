@@ -11,7 +11,7 @@ public class CalculateTime : MonoBehaviour
     void Start()
     {
         defaultTime = GameObject.Find("Pouring Wine").GetComponent<Timer>().GetCurrentTime();
-        time.text = "Time: " + ((int)defaultTime) / 60 + ":" + defaultTime % 60;
+        time.text = ((int)defaultTime) / 60 + ":" + defaultTime % 60;
     }
 
     // Update is called once per frame
@@ -23,6 +23,6 @@ public class CalculateTime : MonoBehaviour
     public void UpdateTime()
     {
         defaultTime = GameObject.Find("Pouring Wine").GetComponent<Timer>().GetCurrentTime();
-        time.text = "Time: " + ((int)defaultTime) / 60 + ":" + defaultTime % 60;
+        time.text = ((int)defaultTime) / 60 + ":" + defaultTime % 60;
     }
 }

@@ -37,6 +37,7 @@ public class Timer : MonoBehaviour
 
     IEnumerator _StartTimer() {
         float currTime = defaultTime;
+        Debug.Log("curr time: " + currTime);
         while (currTime > 0) {
             if(!isPaused){
                 currTime -= Time.deltaTime;

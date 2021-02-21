@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class StartGame : MonoBehaviour
 {
     public Text timer;
+    public Text points;
     public Slider slider;
 
     private TableController tableScript;
@@ -24,6 +25,7 @@ public class StartGame : MonoBehaviour
         tableScript.SetGameStatus(true);
         tableScript.ToggleOutlineVisibility(true);
         tableScript.SetCurrentFood();
+        points.text = "Points: 0";
         Debug.Log("Set square to visible");   
     }
 
@@ -86,7 +88,7 @@ public class StartGame : MonoBehaviour
         }
 
         // make this only happen once
-        if(!waitForPlayer && tableScript.GetGameOver() || timerScript.GetGameStatus()){
+        if(gameStatus != 0 && (!waitForPlayer && tableScript.GetGameOver() || timerScript.GetGameStatus())){
             GameOver();
         }
     }
