@@ -1,100 +1,64 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using System.Collections;
 
+public class WineController : MonoBehaviour {
+    public GameObject wineGlassPrefab;
+    public Vector3 spawnPos;
+    public int numGlasses = 3; // Max: 10
 
-public class WineController : MonoBehaviour
-{
-    public int glassesLeft;
-    public float totalTimeIn = 0f;
-    private bool playClicked = false;  // determine if update() should be running
-    public Slider sliderUI;  // get glassesLeft
-    public Text displayGame;  // win or lose
-    public Text glassesLeftText;  // show glassesLeft
-    public GameObject glass;
-    private GameObject clone;
-    //private Rigidbody rb;  // rb of clone
-    public Transform spawn;
-    private IntakeLiquid script;  // script to GetFull()
-    bool glassSpawned = false;
-    bool lost = false;
-    private GameObject pouringWine;
-    Timer timerScript;
+    private GameObject[] wineGlasses;
+    private GameObject currGlass;
+    private bool currGlassFilled = false;
+    private int numFilled = 0;
 
-    void Start()
-    {
-        //displayGame = GetComponent<Text>();
-        //glassLeftText = GetComponent<Text>();
-        pouringWine = GameObject.Find("Pouring Wine");
-        glass.SetActive(false);  // disable initial glass
-        SetGlassesLeft();
-        SetGlassesText();
-        timerScript = GetComponent<Timer>();
+    // Use this for initialization
+    void Start() {
+
     }
-    public void StartWine()
-    {
-        playClicked = true;
-        timerScript.StartTimer();
-    }
-    private bool CheckLost()  // returns true if game is won or lost
-    {
-        if(/*glassesLeft != 0 && */pouringWine.GetComponent<Timer>().GetGameStatus()) { 
-            displayGame.text = "You Lost!";
-            playClicked = false;
-            return true;
-        }
-        if (glassesLeft == 0 && !GetComponent<Timer>().GetGameStatus()) { 
-            displayGame.text = "Congrats, you win!";
-            pouringWine.GetComponent<Timer>().SetPaused(true);
-            playClicked = false;
-            return true;
-        }
-        return false;
-    }
+
     // Update is called once per frame
-    void SetGlassesText()
-    {
-        glassesLeftText.text = "Glasses Left: " + glassesLeft.ToString();
-    }
-    public void SetGlassesLeft()
-    {
-        glassesLeft = (int) sliderUI.value;
-    }
-    void Update()
-    {
-        if (playClicked)
-        {
-            // if (CheckLost()) { break; }
-            if (!glassSpawned)
-            {
-                clone = Instantiate(glass, spawn.position, spawn.rotation);  // Spawns gameObject
-                clone.SetActive(true);
-                //rb = clone.GetComponent<Rigidbody>();
-                script = clone.GetComponent<IntakeLiquid>();
-                glassSpawned = true;
-            }
-            else if (script.GetFull())
-            {
-                // tell glass amount before destroying
-                totalTimeIn += script.GetTimeIn();
-                Destroy(clone);
-                glassSpawned = false;
-                glassesLeft--;
-                SetGlassesText();
-            }
-
-            // currently glassesLeft == 1 and last glass just spawned
-            if (glassesLeft == 1 && !CheckLost())
-            {
-                IntakeLiquid script = clone.GetComponent<IntakeLiquid>();
-                if (script.GetFull())
-                {
-                    glassesLeft--;
-                    SetGlassesText();
-                }
-                // now glassesLeft == 0 and we won 
-            }
+    void Update() {
+        if (currGlassFilled && numFilled < numGlasses) {
+            currGlassFilled = false;
+            ++numFilled;
+            if (numFilled == numGlasses)
+                Debug.Log("Done");
+                // Stop game
+            else
+                GetNextGlass();
         }
+
+
+        // ===== For testing =====
+        if (Input.GetKeyDown(KeyCode.S)) {
+            StartGame();
+        } else if (Input.GetKeyDown(KeyCode.N)) {
+            ++numFilled;
+            GetNextGlass();
+        }
+            
+    }
+
+    public void StartGame() {
+        GameObject[] temp = new GameObject[numGlasses];
+        temp[numFilled] = Instantiate(wineGlassPrefab, transform.position + new Vector3(-0.35f, 0.35f, 0f), Quaternion.identity);
+        int offset = (int)Mathf.Ceil((numGlasses - 2f) / 2f);
+        for (int i = 1; i < numGlasses; ++i) {
+            temp[i] = Instantiate(wineGlassPrefab, transform.position + new Vector3(0f, 0.35f, 0.2f * (offset - i + 1)), Quaternion.identity);
+        }
+        wineGlasses = temp;
+        currGlass = temp[numFilled];
+    }
+
+    public void SignalController() {
+        Debug.Log("Signalled");
+        currGlassFilled = true;
+    }
+
+    private void GetNextGlass() {
+        GameObject temp = currGlass;
+        currGlass = wineGlasses[numFilled];
+        currGlass.transform.position = temp.transform.position;
+        Destroy(temp);
     }
 }
