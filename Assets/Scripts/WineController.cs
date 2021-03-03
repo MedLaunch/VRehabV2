@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+
 
 public class WineController : MonoBehaviour {
     public GameObject wineGlassPrefab;
@@ -11,7 +13,9 @@ public class WineController : MonoBehaviour {
     private bool currGlassFilled = false;  // changed by SignalController 
     /// </summary>
     private int numFilled = 0;
-
+    public float totalTimeFilled = 0f;
+    private DetectParticles detectParticles;
+    public Text spilled;
     // Use this for initialization
     void Start() {
 
@@ -22,11 +26,16 @@ public class WineController : MonoBehaviour {
         if (currGlassFilled && numFilled < numGlasses) {
             currGlassFilled = false;
             ++numFilled;
-            if (numFilled == numGlasses)
+            if (numFilled == numGlasses) {
+                UpdateTimeFilled();
+                DisplaySpilled();
                 Debug.Log("Done");
                 // Stop game
-            else
+            }
+            else {
+                UpdateTimeFilled();
                 GetNextGlass();
+            }
         }
 
 
@@ -37,7 +46,11 @@ public class WineController : MonoBehaviour {
             ++numFilled;
             GetNextGlass();
         }
-            
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            DisplaySpilled();
+        }
+
     }
 
     public void StartGame() {
@@ -61,5 +74,18 @@ public class WineController : MonoBehaviour {
         currGlass = wineGlasses[numFilled];
         currGlass.transform.position = temp.transform.position;
         Destroy(temp);
+    }
+
+    private void UpdateTimeFilled() {
+        // gets first child (detect particles) of currGlass
+        detectParticles = currGlass.transform.GetChild(0).gameObject.GetComponent<DetectParticles>();
+        totalTimeFilled += detectParticles.GetTimeIn();
+    }
+
+    private void DisplaySpilled()
+    {
+        PourLiquid pourLiquid = GameObject.Find("Wine Bottle").GetComponent<PourLiquid>();
+        float fout = pourLiquid.GetTimeOut();
+        spilled.text = "Spilled: " + totalTimeFilled.ToString() + " / " + fout.ToString();
     }
 }
