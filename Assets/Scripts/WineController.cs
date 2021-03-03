@@ -8,7 +8,8 @@ public class WineController : MonoBehaviour {
 
     private GameObject[] wineGlasses;
     private GameObject currGlass;
-    private bool currGlassFilled = false;
+    private bool currGlassFilled = false;  // changed by SignalController 
+    /// </summary>
     private int numFilled = 0;
 
     // Use this for initialization
@@ -50,7 +51,7 @@ public class WineController : MonoBehaviour {
         currGlass = temp[numFilled];
     }
 
-    public void SignalController() {
+    public void SignalController() { // called by DetectParticles.cs
         Debug.Log("Signalled");
         currGlassFilled = true;
     }
