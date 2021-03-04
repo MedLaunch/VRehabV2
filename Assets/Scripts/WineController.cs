@@ -16,9 +16,15 @@ public class WineController : MonoBehaviour {
     public float totalTimeFilled = 0f;
     private DetectParticles detectParticles;
     public Text spilled;
+
+    public float duration = 2f;
+    public Vector3 startPos, endPos;
+    private bool moving = false;
+    private Vector3[] positions;
+    private int glassCounter = 0;
     // Use this for initialization
     void Start() {
-
+        endPos = transform.position + new Vector3(-0.35f, 0.35f, 0f);
     }
 
     // Update is called once per frame
@@ -44,7 +50,11 @@ public class WineController : MonoBehaviour {
             StartGame();
         } else if (Input.GetKeyDown(KeyCode.N)) {
             ++numFilled;
-            GetNextGlass();
+            //GetNextGlass();
+        }
+        else if (Input.GetKeyDown(KeyCode.M))
+        {
+            MoveGlass();
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
@@ -55,12 +65,15 @@ public class WineController : MonoBehaviour {
 
     public void StartGame() {
         GameObject[] temp = new GameObject[numGlasses];
-        temp[numFilled] = Instantiate(wineGlassPrefab, transform.position + new Vector3(-0.35f, 0.35f, 0f), Quaternion.identity);
+        Vector3[] tempPos = new Vector3[numGlasses];
+        //temp[numFilled] = Instantiate(wineGlassPrefab, transform.position + new Vector3(-0.35f, 0.35f, 0f), Quaternion.identity);
         int offset = (int)Mathf.Ceil((numGlasses - 2f) / 2f);
-        for (int i = 1; i < numGlasses; ++i) {
-            temp[i] = Instantiate(wineGlassPrefab, transform.position + new Vector3(0f, 0.35f, 0.2f * (offset - i + 1)), Quaternion.identity);
+        for (int i = 0; i < numGlasses; ++i) {
+            tempPos[i] = transform.position + new Vector3(0f, 0.4f, 0.2f * (offset - i)); // 0.35 --> 0.4
+            temp[i] = Instantiate(wineGlassPrefab, tempPos[i], Quaternion.identity);
         }
         wineGlasses = temp;
+        positions = tempPos;
         currGlass = temp[numFilled];
     }
 
@@ -87,5 +100,29 @@ public class WineController : MonoBehaviour {
         PourLiquid pourLiquid = GameObject.Find("Wine Bottle").GetComponent<PourLiquid>();
         float fout = pourLiquid.GetTimeOut();
         spilled.text = "Spilled: " + totalTimeFilled.ToString() + " / " + fout.ToString();
+    }
+
+    private void MoveGlass()
+    {
+        if (!moving)
+        {
+            StartCoroutine(_MoveGlass());
+        }
+    }
+
+    IEnumerator _MoveGlass()
+    {
+        startPos = positions[glassCounter++];
+        moving = true;
+        float initialTime = Time.time;
+        float progress = 0;
+        while (progress < 1f)
+        {
+            progress = (Time.time - initialTime) / duration;
+            currGlass.transform.position = Vector3.Lerp(startPos, endPos, progress);
+            yield return null;
+        }
+        Debug.Log("Done");
+        moving = false;
     }
 }
