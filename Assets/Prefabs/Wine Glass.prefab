@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 1513860405424705138}
   - component: {fileID: 1513860405424705137}
   - component: {fileID: 5726855984823217896}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Wine Glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}

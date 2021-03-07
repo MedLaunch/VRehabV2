@@ -22,9 +22,10 @@ public class WineController : MonoBehaviour {
     private bool moving = false;
     private Vector3[] positions;
     private int glassCounter = 0;
+    private bool atCenter = false;
     // Use this for initialization
     void Start() {
-        endPos = transform.position + new Vector3(-0.35f, 0.35f, 0f);
+        endPos = transform.position + new Vector3(-0.35f, 0.38f, 0f);
     }
 
     // Update is called once per frame
@@ -69,7 +70,7 @@ public class WineController : MonoBehaviour {
         //temp[numFilled] = Instantiate(wineGlassPrefab, transform.position + new Vector3(-0.35f, 0.35f, 0f), Quaternion.identity);
         int offset = (int)Mathf.Ceil((numGlasses - 2f) / 2f);
         for (int i = 0; i < numGlasses; ++i) {
-            tempPos[i] = transform.position + new Vector3(0f, 0.4f, 0.2f * (offset - i)); // 0.35 --> 0.4
+            tempPos[i] = transform.position + new Vector3(0f, 0.38f, 0.2f * (offset - i)); // 0.35 --> 0.38
             temp[i] = Instantiate(wineGlassPrefab, tempPos[i], Quaternion.identity);
         }
         wineGlasses = temp;
@@ -104,6 +105,17 @@ public class WineController : MonoBehaviour {
 
     private void MoveGlass()
     {
+        if (!atCenter) {
+            atCenter = true;
+            startPos = positions[glassCounter++]; 
+        }
+        else
+        {
+            atCenter = false;
+            Vector3 temp = startPos;
+            startPos = endPos;
+            endPos = temp;
+        }
         if (!moving)
         {
             StartCoroutine(_MoveGlass());
@@ -112,7 +124,6 @@ public class WineController : MonoBehaviour {
 
     IEnumerator _MoveGlass()
     {
-        startPos = positions[glassCounter++];
         moving = true;
         float initialTime = Time.time;
         float progress = 0;
