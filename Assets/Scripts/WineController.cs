@@ -76,6 +76,7 @@ public class WineController : MonoBehaviour {
         wineGlasses = temp;
         positions = tempPos;
         currGlass = temp[numFilled];
+        MoveGlass();
     }
 
     public void SignalController() { // called by DetectParticles.cs
@@ -84,6 +85,7 @@ public class WineController : MonoBehaviour {
     }
 
     private void GetNextGlass() {
+        MoveGlass();
         GameObject temp = currGlass;
         currGlass = wineGlasses[numFilled];
         currGlass.transform.position = temp.transform.position;
