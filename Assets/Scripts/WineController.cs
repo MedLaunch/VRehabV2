@@ -21,11 +21,15 @@ public class WineController : MonoBehaviour {
     public Vector3 startPos, endPos;
     private bool moving = false;
     private Vector3[] positions;
-    private int glassCounter = 0;
-    private bool atCenter = false;
+    public int glassCounter;
+    public AnimationCurve curve;
+
+    private Timer timerScript;
+
     // Use this for initialization
     void Start() {
         endPos = transform.position + new Vector3(-0.35f, 0.38f, 0f);
+        timerScript = gameObject.GetComponent<Timer>();
     }
 
     // Update is called once per frame
@@ -34,14 +38,14 @@ public class WineController : MonoBehaviour {
             currGlassFilled = false;
             ++numFilled;
             if (numFilled == numGlasses) {
+                SwitchGlasses();
                 UpdateTimeFilled();
                 DisplaySpilled();
-                Debug.Log("Done");
-                // Stop game
+                timerScript.CompleteGame();
             }
             else {
                 UpdateTimeFilled();
-                GetNextGlass();
+                SwitchGlasses();
             }
         }
 
@@ -55,7 +59,7 @@ public class WineController : MonoBehaviour {
         }
         else if (Input.GetKeyDown(KeyCode.M))
         {
-            MoveGlass();
+            SwitchGlasses();
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
@@ -65,6 +69,8 @@ public class WineController : MonoBehaviour {
     }
 
     public void StartGame() {
+        timerScript.StartTimer();
+        ResetVariables();
         GameObject[] temp = new GameObject[numGlasses];
         Vector3[] tempPos = new Vector3[numGlasses];
         //temp[numFilled] = Instantiate(wineGlassPrefab, transform.position + new Vector3(-0.35f, 0.35f, 0f), Quaternion.identity);
@@ -76,20 +82,11 @@ public class WineController : MonoBehaviour {
         wineGlasses = temp;
         positions = tempPos;
         currGlass = temp[numFilled];
-        MoveGlass();
+        SwitchGlasses();
     }
 
     public void SignalController() { // called by DetectParticles.cs
-        Debug.Log("Signalled");
         currGlassFilled = true;
-    }
-
-    private void GetNextGlass() {
-        MoveGlass();
-        GameObject temp = currGlass;
-        currGlass = wineGlasses[numFilled];
-        currGlass.transform.position = temp.transform.position;
-        Destroy(temp);
     }
 
     private void UpdateTimeFilled() {
@@ -101,41 +98,78 @@ public class WineController : MonoBehaviour {
     private void DisplaySpilled()
     {
         PourLiquid pourLiquid = GameObject.Find("Wine Bottle").GetComponent<PourLiquid>();
-        float fout = pourLiquid.GetTimeOut();
-        spilled.text = "Spilled: " + totalTimeFilled.ToString() + " / " + fout.ToString();
+        float lout = Mathf.Round(pourLiquid.GetTimeOut() * 100.0f) * 0.01f;
+        float lin = Mathf.Round(totalTimeFilled * 100.0f) * 0.01f;
+        spilled.text = "Spilled: " + lin.ToString() + " / " + lout.ToString();
     }
 
-    private void MoveGlass()
+    private void SwitchGlasses()
     {
-        if (!atCenter) {
-            atCenter = true;
-            startPos = positions[glassCounter++]; 
-        }
-        else
-        {
-            atCenter = false;
-            Vector3 temp = startPos;
-            startPos = endPos;
-            endPos = temp;
-        }
         if (!moving)
         {
-            StartCoroutine(_MoveGlass());
+            StartCoroutine(_SwitchGlasses());
         }
     }
-
-    IEnumerator _MoveGlass()
+    IEnumerator _SwitchGlasses()
     {
+        if (glassCounter != 0)
+        {
+            yield return _MoveGlassBack();
+            GameObject temp = currGlass;
+            if (numFilled < positions.Length) { currGlass = wineGlasses[numFilled]; } // avoid index out of bounds
+            currGlass.transform.position = temp.transform.position;
+        }
+        if (glassCounter != positions.Length)
+        {
+            yield return _MoveNextGlass();
+        }
+        glassCounter++;
+    }
+    IEnumerator _MoveNextGlass()
+    {
+        startPos = positions[glassCounter];
         moving = true;
         float initialTime = Time.time;
         float progress = 0;
         while (progress < 1f)
         {
             progress = (Time.time - initialTime) / duration;
-            currGlass.transform.position = Vector3.Lerp(startPos, endPos, progress);
+            currGlass.transform.position = Vector3.LerpUnclamped(startPos, endPos, curve.Evaluate(progress));
             yield return null;
         }
-        Debug.Log("Done");
         moving = false;
+    }
+    IEnumerator _MoveGlassBack()
+    {
+        // swaps endPos and startPos to move back
+        startPos = positions[glassCounter - 1];
+        moving = true;
+        float initialTime = Time.time;
+        float progress = 0;
+        while (progress < 1f)
+        {
+            progress = (Time.time - initialTime) / duration;
+            currGlass.transform.position = Vector3.LerpUnclamped(endPos, startPos, curve.Evaluate(progress));
+            yield return null;
+        }
+        moving = false;
+    }
+
+    private void ResetVariables()
+    {
+        glassCounter = 0;
+        numFilled = 0;
+        currGlassFilled = false;
+        totalTimeFilled = 0f;
+   
+        spilled.text = "Spilled: ";
+        if (wineGlasses != null)
+        {
+            for (int i = 0; i < wineGlasses.Length; i++)
+            {
+                Destroy(wineGlasses[i]);
+            }
+        }
+        
     }
 }

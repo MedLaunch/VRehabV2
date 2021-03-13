@@ -10,6 +10,7 @@ public class Timer : MonoBehaviour
 
     public bool isPaused;
     public bool isGameDone;
+    IEnumerator time;
 
     // Update is called once per frame
 
@@ -32,7 +33,9 @@ public class Timer : MonoBehaviour
     }
 
     public void StartTimer() {
-        StartCoroutine(_StartTimer());
+        if(time != null) { StopCoroutine(time); }
+        time = _StartTimer();
+        StartCoroutine(time);
     }
 
     IEnumerator _StartTimer() {
@@ -62,5 +65,10 @@ public class Timer : MonoBehaviour
     public void SetPaused(bool paused)
     {
         isPaused = paused;
+    }
+    public void CompleteGame()
+    {
+        StopCoroutine(time);
+        timerText.text = "Time: Done!";
     }
 }
