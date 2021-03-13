@@ -25,6 +25,7 @@ public class WineController : MonoBehaviour {
     public AnimationCurve curve;
 
     private Timer timerScript;
+    public Slider glassesSlider;
 
     // Use this for initialization
     void Start() {
@@ -171,5 +172,10 @@ public class WineController : MonoBehaviour {
             }
         }
         
+    }
+
+    public void SetGlasses()
+    {
+        numGlasses = (int)glassesSlider.value;
     }
 }
