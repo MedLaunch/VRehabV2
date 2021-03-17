@@ -2038,9 +2038,8 @@ GameObject:
   - component: {fileID: 8650216110342141108}
   - component: {fileID: 8650216110342141111}
   - component: {fileID: 8650216110342141110}
-  - component: {fileID: 8650216110342141113}
-  - component: {fileID: 8650216110342141112}
   - component: {fileID: 8650216110342141118}
+  - component: {fileID: 1001715310975089742}
   m_Layer: 0
   m_Name: Horseshoe
   m_TagString: Untagged
@@ -3433,6 +3432,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3457,6 +3457,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &8650216110342141111
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3481,56 +3482,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8650216110342141113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8650216110342141105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: fc1ee096cf0dcc9429a4e0fab6d58826,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
---- !u!114 &8650216110342141112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8650216110342141105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5649b9b5da301004cb40cc6f10e816ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 40
-  countText: {fileID: 0}
-  winTextObject: {fileID: 0}
-  baited: {fileID: 0}
-  instructions: {fileID: 0}
-  upForce: 100
-  expF: 100
 --- !u!114 &8650216110342141118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3543,11 +3494,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23d1340588f3af24cadc413bd0eed554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreText: {fileID: 0}
   spawn: {fileID: 0}
   horseshoe: {fileID: 8650216110342141105}
-  x: 0
-  y: 3
-  z: 3
+  compareDistance: 10
+  speed: 1.25
+  score: 0
+--- !u!114 &1001715310975089742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8650216110342141105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
 --- !u!1 &8650216110386984147
 GameObject:
   m_ObjectHideFlags: 0
