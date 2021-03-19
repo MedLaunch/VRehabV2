@@ -12,12 +12,12 @@ public class Launch : MonoBehaviour
     float interval = 0f;
     float scoreInterval = 0f;
     float smallScoreInterval = 0f;
-    float step = 1;  // Time before next respawn of horseshoe
+    float step = 0.5f;  // Time before next respawn of horseshoe
     float stepScoreSet = 1.5f;  // Time before next score is counted
     float stepScoreInit = 0;
     float stepSmallScoreSet = 1.5f;  // Time for getting near target
     float stepSmallScoreInit = 0;
-    private float x = 0f, y = 10f, z = 10f;
+    private float x = -200f, y = 200f, z = 0;
     Vector3 launch;
     Vector3 torque;
 
@@ -106,15 +106,15 @@ public class Launch : MonoBehaviour
             }
         }
 
-       /* if (newClone)
+        if (newClone)
         {
             if ((projectile.transform.position - transform.position).sqrMagnitude < compareDistance)
             {
-                score += 0.5f;
+                score += 0.1f;
                 SetScoreText();
                 newClone = false;
             }
-        }*/
+        }
         //if (Input.GetKey("t"))
         //{
         //    lerp = true;
@@ -138,21 +138,18 @@ public class Launch : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        // pointSound.PlayOneShot(pointSound.clip);
-        /*if (Time.time - scoreInterval > stepScoreInit)  // Stops update from overcounting
-        {
-            // Start step at 0 initially or else a quick score will not register 
-            // (waits stepScoreSet seconds before allowing score to register)
-            if (stepScoreInit == 0) { stepScoreInit = stepScoreSet; }
-            score += 0.5f;
-            SetScoreText();
-            scoreInterval = Time.time;
-        }*/
+        //pointSound.PlayOneShot(pointSound.clip);
 
-        if(collision.gameObject.name == "Horseshoe")
-        {
-            score += 1f;
-            SetScoreText();
+        if (Time.time - scoreInterval > stepScoreInit) { // Stops update from overcounting
+            if (collision.gameObject.name == "Horseshoe(Clone)")
+            {
+                // Start step at 0 initially or else a quick score will not register 
+                // (waits stepScoreSet seconds before allowing score to register)
+                if (stepScoreInit == 0) { stepScoreInit = stepScoreSet; }
+                score += 1f;
+                SetScoreText();
+                scoreInterval = Time.time;
+            }
         }
     }
 }
