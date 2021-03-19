@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 public class Launch : MonoBehaviour
 {
-    public TextMeshProUGUI scoreText;  // Display score
+    public Text scoreText;  // Display score
     private GameObject clone;  // for spawning
     private Rigidbody projectile;  // rigidbody of clone
     public Transform spawn;
-    public GameObject horseshoe;  // prefab
+    public GameObject Horseshoe;  // prefab
     float interval = 0f;
     float scoreInterval = 0f;
     float smallScoreInterval = 0f;
@@ -43,15 +42,15 @@ public class Launch : MonoBehaviour
     bool newClone = true;  // Checks if object is a new clone for smallScore counting once
     void Start()
     {
-        projectile = horseshoe.GetComponent<Rigidbody>();
+        projectile = Horseshoe.GetComponent<Rigidbody>();
 
         launch = new Vector3(x, y, z);
         torque = new Vector3(0, 0.7f, 0);
 
         //Hide original gameObject
-        horseshoe.SetActive(false);
+        Horseshoe.SetActive(false);
         //Start game with clones
-        clone = Instantiate(horseshoe, spawn.position, spawn.rotation);  // Spawns gameObject
+        clone = Instantiate(Horseshoe, spawn.position, spawn.rotation);  // Spawns gameObject
         clone.SetActive(true);  // clone spawns false, set to true each time
         newClone = true;
         projectile = clone.GetComponent<Rigidbody>();  // Gets rigidbody of new gameObject clone
@@ -87,7 +86,7 @@ public class Launch : MonoBehaviour
             if (Time.time - interval > step) // Current time - Time of last action > spacing time                 
             {
                 interval = Time.time;
-                clone = Instantiate(horseshoe, spawn.position, spawn.rotation);  // Spawns gameObject
+                clone = Instantiate(Horseshoe, spawn.position, spawn.rotation);  // Spawns gameObject
                 clone.SetActive(true); // set gameobject true
                 newClone = true;
                 projectile = clone.GetComponent<Rigidbody>();  // Gets rigidbody of new gameObject clone
@@ -100,14 +99,14 @@ public class Launch : MonoBehaviour
             {
                 Destroy(clone);
                 interval = Time.time;
-                clone = Instantiate(horseshoe, spawn.position, spawn.rotation);  // Spawns gameObject
+                clone = Instantiate(Horseshoe, spawn.position, spawn.rotation);  // Spawns gameObject
                 clone.SetActive(true); // set gameobject true
                 newClone = true;
                 projectile = clone.GetComponent<Rigidbody>();  // Gets rigidbody of new gameObject clone
             }
         }
 
-        if (newClone)
+       /* if (newClone)
         {
             if ((projectile.transform.position - transform.position).sqrMagnitude < compareDistance)
             {
@@ -115,7 +114,7 @@ public class Launch : MonoBehaviour
                 SetScoreText();
                 newClone = false;
             }
-        }
+        }*/
         //if (Input.GetKey("t"))
         //{
         //    lerp = true;
@@ -140,7 +139,7 @@ public class Launch : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         // pointSound.PlayOneShot(pointSound.clip);
-        if (Time.time - scoreInterval > stepScoreInit)  // Stops update from overcounting
+        /*if (Time.time - scoreInterval > stepScoreInit)  // Stops update from overcounting
         {
             // Start step at 0 initially or else a quick score will not register 
             // (waits stepScoreSet seconds before allowing score to register)
@@ -148,6 +147,12 @@ public class Launch : MonoBehaviour
             score += 0.5f;
             SetScoreText();
             scoreInterval = Time.time;
+        }*/
+
+        if(collision.gameObject.name == "Horseshoe")
+        {
+            score += 1f;
+            SetScoreText();
         }
     }
 }
