@@ -115,9 +115,10 @@ public class Launch : MonoBehaviour
                 {
                     score += 1.0f;
                     SetScoreText();
+            newClone = false;
                 }
             }
-            newClone = false;
+            notTouched = true;
         }
         //if (Input.GetKey("t"))
         //{
