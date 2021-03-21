@@ -61,8 +61,9 @@ public class StartFoodPlacement : MonoBehaviour
     }
     void Update(){
         // For testing purposes
-        if(Input.GetKeyDown(KeyCode.LeftArrow)){
+        if(Input.GetKeyDown(KeyCode.W)){
             Play();
+            Debug.Log("started game");
         } else if(Input.GetKeyDown(KeyCode.RightArrow)){
             if(timerScript.isPaused){
                 Continue();

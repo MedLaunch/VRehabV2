@@ -8,6 +8,7 @@ public class ObjectQueue : MonoBehaviour {
     Queue<GameObject> objectQ = new Queue<GameObject>();
 
     GameObject[] availableFoodItems = new GameObject[6];
+    GameObject[] availablePlates = new GameObject[3];
     bool getNextObject;
 
 
@@ -15,12 +16,26 @@ public class ObjectQueue : MonoBehaviour {
     void Awake() {
         tableController = GameObject.Find("Table Top").GetComponent<TableController>();
         int i = 0;
+        int p = 0;
         foreach (Transform child in transform) {
-            child.gameObject.SetActive(false);
-            objectQ.Enqueue(child.gameObject);
-            availableFoodItems[i] = Instantiate(child.gameObject);
-            i += 1;
+            if(child.gameObject.tag == "Plate"){
+                child.gameObject.SetActive(false);
+                availablePlates[p] = Instantiate(child.gameObject);
+                p += 1;
+            }
         }
+        foreach (Transform child in transform) {
+            if(child.gameObject.tag == "Food"){
+                child.gameObject.SetActive(false);
+                int plateIndex = Random.Range(0, 2);
+                objectQ.Enqueue(Instantiate(availablePlates[plateIndex]));
+                objectQ.Enqueue(child.gameObject);
+                availableFoodItems[i] = Instantiate(child.gameObject);
+                i += 1;
+            }
+        }
+        // TODO: instantiate available plates
+        // availablePlates[i] = Instantiate(child.gameObject);
         getNextObject = objectQ.Count != 0;
     }
 
@@ -34,6 +49,7 @@ public class ObjectQueue : MonoBehaviour {
     public GameObject GetNextObject() {
         if (objectQ.Count != 0) {
             GameObject currObject = objectQ.Dequeue();
+            Debug.Log(currObject);
             currObject.SetActive(true);
             return currObject;
         } else {
@@ -42,13 +58,18 @@ public class ObjectQueue : MonoBehaviour {
     }
 
     public void AddObject(){
+        // TODO: When adding a new food item, also add a plate!
         int index = Random.Range(0, 5);
+        int plateIndex = Random.Range(0, 2);
         GameObject food = Instantiate(availableFoodItems[index]);
+        GameObject plate = Instantiate(availablePlates[plateIndex]);
         food.transform.parent = gameObject.transform;
         food.transform.localPosition = availableFoodItems[index].transform.position;
         food.transform.localRotation = availableFoodItems[index].transform.rotation;
         food.transform.localScale = availableFoodItems[index].transform.localScale;
         food.SetActive(false);
+        plate.SetActive(false);
+        objectQ.Enqueue(plate);
         objectQ.Enqueue(food);
     }
 
