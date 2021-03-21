@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Launch : MonoBehaviour
 {
+    private bool notTouched = true;
     public Text scoreText;  // Display score
     private GameObject clone;  // for spawning
     private Rigidbody projectile;  // rigidbody of clone
@@ -108,12 +109,15 @@ public class Launch : MonoBehaviour
 
         if (newClone)
         {
-            if ((projectile.transform.position - transform.position).sqrMagnitude < compareDistance)
+            if (notTouched)
             {
-                score += 0.1f;
-                SetScoreText();
-                newClone = false;
+                if ((projectile.transform.position - transform.position).sqrMagnitude < compareDistance)
+                {
+                    score += 1.0f;
+                    SetScoreText();
+                }
             }
+            newClone = false;
         }
         //if (Input.GetKey("t"))
         //{
@@ -146,9 +150,10 @@ public class Launch : MonoBehaviour
                 // Start step at 0 initially or else a quick score will not register 
                 // (waits stepScoreSet seconds before allowing score to register)
                 if (stepScoreInit == 0) { stepScoreInit = stepScoreSet; }
-                score += 1f;
+                score += 3.0f;
                 SetScoreText();
                 scoreInterval = Time.time;
+                notTouched = false;
             }
         }
     }
