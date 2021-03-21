@@ -49,7 +49,8 @@ public class ObjectQueue : MonoBehaviour {
     public GameObject GetNextObject() {
         if (objectQ.Count != 0) {
             GameObject currObject = objectQ.Dequeue();
-            Debug.Log(currObject);
+            // Debug.Log(currObject);
+            Debug.Log("Get next object was called");
             currObject.SetActive(true);
             return currObject;
         } else {

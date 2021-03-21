@@ -37,12 +37,23 @@ public class TableController : MonoBehaviour {
 
     private int numFood = 6;
 
+    private float originalX = 0f;
+
+    private int rows = 5;
+
+    private float distance = 0.7f;
     // Start is called before the first frame update
+
+    private bool newCollision = true;
+
+    private Vector3 originalPosition;
+    private bool justFinishScore = false;
     public void Start() {
         outlineRender = outline.GetComponent<SpriteRenderer>();
         objectQueue = GameObject.Find("Foods").GetComponent<ObjectQueue>();
         yHeight = outline.transform.position.y;
-        RandomizeOutlinePosition();
+        //RandomizeOutlinePosition();
+        originalX = outline.transform.position.x;
         outline.SetActive(false);
         sound = GetComponent<AudioSource>();
     }
@@ -50,6 +61,12 @@ public class TableController : MonoBehaviour {
     public void AddFood(){
         numFood += 1;
         objectQueue.AddObject();
+        if(numFood >= 8){
+            distance = 0.5f;
+            rows = 6;
+        } else {
+            distance = 0.6f;
+        }
     }
 
     public void RemoveFood(){
@@ -61,6 +78,10 @@ public class TableController : MonoBehaviour {
             currentFood = objectQueue.GetNextObject();
             if(!currentFood.activeSelf){
                 currentFood.SetActive(false);
+            }
+            if(numFood < 8){
+                distance = 0.6f;
+                rows = 5;
             }
         }
     }
@@ -78,11 +99,23 @@ public class TableController : MonoBehaviour {
                 modifiedPosition.y = gameObject.transform.position.y + 0.1f;
                 if (inScore) {
                     StartCoroutine(FadeOut());
+                } else {
+                    if(justFinishScore){
+                        outlineRender.color += new Color(0,0,0,1);
+                        outline.transform.position = originalPosition +  new Vector3(0f, 0.03f, 0f);
+                        outline.transform.localScale = new Vector3(0.25f, 0.6f, 0.1f);
+                        outline.SetActive(true);
+                        justFinishScore = false;
+                    }
+                    if(currentFood.tag == "Food"){
+                        CheckPosition(currentFood);
+                    }
                 }
             }
         }     
     }
     
+
     public void SetGameStatus(bool status){
         timerIsRunning = status;
     }
@@ -96,8 +129,11 @@ public class TableController : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Food")) {
+        // always colliding
+        if (other.CompareTag("Plate") && newCollision) {
+            Debug.Log("another plate collision");
             CheckPosition(other.gameObject);
+            originalPosition = outline.transform.position;
             placed = true;
         }
             
@@ -137,8 +173,8 @@ public class TableController : MonoBehaviour {
 
         GameObject temp = currentFood;
         currentFood = objectQueue.GetNextObject();
-        Debug.Log(currentFood);
-        if (currentFood != null) {
+        Debug.Log("in score point mechanism");
+        if (temp != null) {
             StartCoroutine(Create(temp));
         } else {
             temp.SetActive(false);
@@ -150,11 +186,22 @@ public class TableController : MonoBehaviour {
     }
 
     IEnumerator Create(GameObject temp){
-        yield return new WaitForSeconds(0.2f);
-        temp.SetActive(false);
-        Destroy(temp);
+        Debug.Log("in the place for destruction");
+        float seconds = 0.2f;
+        yield return new WaitForSeconds(seconds);
+        if(temp.tag == "Plate"){
+            newCollision = false;
+            justFinishScore = true;
+        } else {
+            newCollision = true;
+        }
+        Debug.Log(newCollision);
+        Debug.Log(objectQueue.GetCount());
         outlineRender.color = Color.white;
-        RandomizeOutlinePosition();
+        if(objectQueue.GetCount() % 2 != 0){
+            RandomizeOutlinePosition();
+        }
+        // currentFood = objectQueue.GetNextObject();
         inScore = false;
         placed = false;
     }
@@ -183,25 +230,23 @@ public class TableController : MonoBehaviour {
     public void RandomizeOutlinePosition() {
         //float x = Random.Range(transform.position.x - xMax, transform.position.x + xMax);
         // float z = Random.Range(transform.position.z - zMax, transform.position.z + zMax);
-        int rows = 4;
         // if the num food index % rows == 1, then it's a start of a new row
+        outline.transform.localScale = new Vector3(0.35f, 0.7f, 0.1f);
         int numItems = objectQueue.GetCount();
-        float x = outline.transform.position.x + 0.5f;
+        float x = outline.transform.position.x + distance;
         float z = outline.transform.position.z;
-        Debug.Log("num items, no plate index");
-        Debug.Log(numItems);
-        if(numItems % 2 == 0){
+        if(numItems % 2 != 0){
             // plate is at top of queue, set outline on plate
             int noPlateIndex = Mathf.Abs(numItems / 2  - numFood);
-            Debug.Log(noPlateIndex % rows);
             if(noPlateIndex % rows == 0 && noPlateIndex > 0){
                 // start of a new row
-                z = outline.transform.position.z + 1f;
-                x = outline.transform.position.x - (2f);
+                z = outline.transform.position.z - 0.4f;
+                // x = outline.transform.position.x - (2f);
+                x = originalX;
             }
         } else {
             // stuff to do when food is being placed instead
-        }*-
+        }
         outline.transform.position = new Vector3(x, yHeight + 0.01f, z);
         outline.SetActive(true);
         currentOutlineBounds = outline.GetComponent<Collider>();
@@ -212,9 +257,17 @@ public class TableController : MonoBehaviour {
             currentFood.SetActive(true);
             Vector3 up = new Vector3(0f,1f,0f);
             Vector3 left = new Vector3(0.022f, 0f, 0f);
-            RandomizeOutlinePosition();
-            currentFood.transform.position = outline.transform.position + up + left;
-            currentFood = objectQueue.GetNextObject();
+            if(currentFood.tag == "Plate"){
+                currentFood.transform.position = outline.transform.position + new Vector3(0f, 1.25f, 0f) + left;
+            } else {
+                currentFood.transform.position = outline.transform.position + left;
+            }
+            // currentFood = objectQueue.GetNextObject();
+            // manual for now, remove once plate and food detection occurs
+            // if(objectQueue.GetCount() % 2 == 0){
+            //     RandomizeOutlinePosition();
+            //     currentFood = objectQueue.GetNextObject();
+            // }
         }
     }
 
