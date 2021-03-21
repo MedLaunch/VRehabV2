@@ -37,12 +37,18 @@ public class TableController : MonoBehaviour {
 
     private int numFood = 6;
 
+    private float originalX = 0f;
+
+    private int rows = 5;
+
+    private float distance = 0.7f;
     // Start is called before the first frame update
     public void Start() {
         outlineRender = outline.GetComponent<SpriteRenderer>();
         objectQueue = GameObject.Find("Foods").GetComponent<ObjectQueue>();
         yHeight = outline.transform.position.y;
-        RandomizeOutlinePosition();
+        // RandomizeOutlinePosition();
+        originalX = outline.transform.position.x;
         outline.SetActive(false);
         sound = GetComponent<AudioSource>();
     }
@@ -50,6 +56,12 @@ public class TableController : MonoBehaviour {
     public void AddFood(){
         numFood += 1;
         objectQueue.AddObject();
+        if(numFood >= 8){
+            distance = 0.5f;
+            rows = 6;
+        } else {
+            distance = 0.6f;
+        }
     }
 
     public void RemoveFood(){
@@ -61,6 +73,10 @@ public class TableController : MonoBehaviour {
             currentFood = objectQueue.GetNextObject();
             if(!currentFood.activeSelf){
                 currentFood.SetActive(false);
+            }
+            if(numFood < 8){
+                distance = 0.6f;
+                rows = 5;
             }
         }
     }
@@ -183,25 +199,24 @@ public class TableController : MonoBehaviour {
     public void RandomizeOutlinePosition() {
         //float x = Random.Range(transform.position.x - xMax, transform.position.x + xMax);
         // float z = Random.Range(transform.position.z - zMax, transform.position.z + zMax);
-        int rows = 4;
         // if the num food index % rows == 1, then it's a start of a new row
         int numItems = objectQueue.GetCount();
-        float x = outline.transform.position.x + 0.5f;
+        float x = outline.transform.position.x + distance;
         float z = outline.transform.position.z;
         Debug.Log("num items, no plate index");
         Debug.Log(numItems);
-        if(numItems % 2 == 0){
+        if(numItems % 2 != 0){
             // plate is at top of queue, set outline on plate
             int noPlateIndex = Mathf.Abs(numItems / 2  - numFood);
             Debug.Log(noPlateIndex % rows);
             if(noPlateIndex % rows == 0 && noPlateIndex > 0){
                 // start of a new row
-                z = outline.transform.position.z + 1f;
-                x = outline.transform.position.x - (2f);
+                z = outline.transform.position.z - .4f;
+                x = originalX;
             }
         } else {
             // stuff to do when food is being placed instead
-        }*-
+        }
         outline.transform.position = new Vector3(x, yHeight + 0.01f, z);
         outline.SetActive(true);
         currentOutlineBounds = outline.GetComponent<Collider>();
@@ -212,9 +227,15 @@ public class TableController : MonoBehaviour {
             currentFood.SetActive(true);
             Vector3 up = new Vector3(0f,1f,0f);
             Vector3 left = new Vector3(0.022f, 0f, 0f);
-            RandomizeOutlinePosition();
-            currentFood.transform.position = outline.transform.position + up + left;
+            if(currentFood.tag == "Plate"){
+                currentFood.transform.position = outline.transform.position + new Vector3(0f, 1.25f, 0f) + left;
+            } else {
+                currentFood.transform.position = outline.transform.position + up + left;
+            }
             currentFood = objectQueue.GetNextObject();
+            if(objectQueue.GetCount() % 2 != 0){
+                RandomizeOutlinePosition();
+            }
         }
     }
 

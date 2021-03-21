@@ -78,7 +78,7 @@ public class Settings : MonoBehaviour
     }
     public void IncreaseNumFood(){
         int numFood = int.Parse(foodCount.text);
-        if(numFood < 20){
+        if(numFood < 10){
             foodCount.text = (numFood + 1).ToString();
             tableScript.AddFood();
         }
