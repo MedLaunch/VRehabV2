@@ -13,7 +13,7 @@ public class Launch : MonoBehaviour
     float interval = 0f;
     float scoreInterval = 0f;
     float smallScoreInterval = 0f;
-    float step = 0.5f;  // Time before next respawn of horseshoe
+    float step = 1.0f;  // Time before next respawn of horseshoe
     float stepScoreSet = 1.5f;  // Time before next score is counted
     float stepScoreInit = 0;
     float stepSmallScoreSet = 1.5f;  // Time for getting near target
@@ -21,13 +21,14 @@ public class Launch : MonoBehaviour
     private float x = -200f, y = 200f, z = 0;
     Vector3 launch;
     Vector3 torque;
+    bool firstSpawn = false;
 
     AudioSource pointSound;
 
     // Transforms to act as start and end markers for the journey.
     //public Transform startMarker;
     //public Transform endMarker;
-    public float compareDistance = 10;
+    public float compareDistance = 0f;
 
     // Movement speed in units per second.
     public float speed = 1.25F;
@@ -39,7 +40,7 @@ public class Launch : MonoBehaviour
     //private float journeyLength;
     //private bool lerp = false;
 
-    public float score = 0;
+    public float score = 0f;
     bool newClone = true;  // Checks if object is a new clone for smallScore counting once
     void Start()
     {
@@ -59,6 +60,7 @@ public class Launch : MonoBehaviour
         //startTime = Time.time;
         scoreText.gameObject.SetActive(true);
         SetScoreText();
+        firstSpawn = true;
         pointSound = GetComponent<AudioSource>();
 
         // Calculate the journey length.
@@ -86,18 +88,39 @@ public class Launch : MonoBehaviour
             // Interval makes one click = one action rather than length of click in milliseconds
             if (Time.time - interval > step) // Current time - Time of last action > spacing time                 
             {
+                if (notTouched)
+                {
+                    if ((projectile.transform.position - transform.position).sqrMagnitude < (compareDistance))
+                    {
+                        score += 1.0f;
+                        SetScoreText();
+                    }
+                }
+                notTouched = true;
+                newClone = false;
                 interval = Time.time;
                 clone = Instantiate(Horseshoe, spawn.position, spawn.rotation);  // Spawns gameObject
                 clone.SetActive(true); // set gameobject true
                 newClone = true;
                 projectile = clone.GetComponent<Rigidbody>();  // Gets rigidbody of new gameObject clone
             }
+            firstSpawn = false;
         }
         if (Input.GetKeyDown(KeyCode.F))  // Delete object
         {
             // Interval makes one click = one action rather than length of click in milliseconds
             if (Time.time - interval > step) // Current time - Time of last action > spacing time                 
             {
+                if (notTouched)
+                {
+                    if ((projectile.transform.position - transform.position).sqrMagnitude < (compareDistance))
+                    {
+                        score += 1.0f;
+                        SetScoreText();
+                    }
+                }
+                notTouched = true;
+                newClone = false;
                 Destroy(clone);
                 interval = Time.time;
                 clone = Instantiate(Horseshoe, spawn.position, spawn.rotation);  // Spawns gameObject
@@ -105,21 +128,24 @@ public class Launch : MonoBehaviour
                 newClone = true;
                 projectile = clone.GetComponent<Rigidbody>();  // Gets rigidbody of new gameObject clone
             }
+            firstSpawn = false;
         }
 
-        if (newClone)
+       /* if (newClone && !firstSpawn)
         {
             if (notTouched)
             {
-                if ((projectile.transform.position - transform.position).sqrMagnitude < compareDistance)
+                if ((projectile.transform.position - transform.position).sqrMagnitude < (compareDistance))
                 {
+                    float dist = (projectile.transform.position - transform.position).sqrMagnitude;
+                    Debug.Log(dist.ToString());
                     score += 1.0f;
                     SetScoreText();
-            newClone = false;
                 }
             }
             notTouched = true;
-        }
+            newClone = false;
+        }*/
         //if (Input.GetKey("t"))
         //{
         //    lerp = true;
