@@ -98,7 +98,7 @@ public class TableController : MonoBehaviour {
                 Vector3 modifiedPosition = currentFood.transform.position;
                 modifiedPosition.y = gameObject.transform.position.y + 0.1f;
                 if (inScore) {
-                    StartCoroutine(FadeOut());
+                    //StartCoroutine(FadeOut());
                 } else {
                     if(justFinishScore){
                         outlineRender.color += new Color(0,0,0,1);
@@ -175,6 +175,7 @@ public class TableController : MonoBehaviour {
         currentFood = objectQueue.GetNextObject();
         Debug.Log("in score point mechanism");
         if (temp != null) {
+            StartCoroutine(FadeOut());
             StartCoroutine(Create(temp));
         } else {
             temp.SetActive(false);
@@ -208,12 +209,14 @@ public class TableController : MonoBehaviour {
 
     IEnumerator FadeOut(){
         //sound.Play();
-        //sound.PlayOneShot(sound.clip); 
-        while (outlineRender.color.a > 0) {
+        //sound.PlayOneShot(sound.clip);
+        float duration = 1.5f;
+        while (duration > 0) {
             Color outColor = outlineRender.color;
             float fadeAmount = outColor.a - (0.05f * Time.deltaTime);
             outColor = new Color(outColor.r, outColor.g, outColor.b, fadeAmount);
             outlineRender.color = outColor;
+            duration -= Time.deltaTime;
             yield return null;
         }
         //sound.Stop();
