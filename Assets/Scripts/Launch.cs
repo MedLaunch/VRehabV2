@@ -77,11 +77,11 @@ public class Launch : MonoBehaviour
         //if (!lerp)
         //{
         // Launches projectile
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            projectile.AddForce(launch);
-            projectile.AddTorque(torque);
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    projectile.AddForce(launch);
+        //    projectile.AddTorque(torque);
+        //}
         //Creates new projectile for launching
         if (Input.GetKeyDown(KeyCode.R))
         {

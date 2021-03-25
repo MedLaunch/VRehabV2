@@ -52,17 +52,17 @@ public class WineController : MonoBehaviour {
 
 
         // ===== For testing =====
-        if (Input.GetKeyDown(KeyCode.S)) {
+        if (Input.GetKeyDown(KeyCode.H)) {
             StartGame();
-        } else if (Input.GetKeyDown(KeyCode.N)) {
+        } else if (Input.GetKeyDown(KeyCode.J)) {
             ++numFilled;
             //GetNextGlass();
         }
-        else if (Input.GetKeyDown(KeyCode.M))
+        else if (Input.GetKeyDown(KeyCode.K))
         {
             SwitchGlasses();
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.L))
         {
             DisplaySpilled();
         }
