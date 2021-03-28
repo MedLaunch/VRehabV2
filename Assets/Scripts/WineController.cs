@@ -35,18 +35,24 @@ public class WineController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (currGlassFilled && numFilled < numGlasses) {
-            currGlassFilled = false;
-            ++numFilled;
-            if (numFilled == numGlasses) {
-                SwitchGlasses();
-                UpdateTimeFilled();
-                DisplaySpilled();
-                timerScript.CompleteGame();
-            }
-            else {
-                UpdateTimeFilled();
-                SwitchGlasses();
+        if (!timerScript.GetGameStatus()) // game is not done
+        { 
+            if (currGlassFilled && numFilled < numGlasses)
+            {
+                currGlassFilled = false;
+                ++numFilled;
+                if (numFilled == numGlasses)
+                {
+                    SwitchGlasses();
+                    UpdateTimeFilled();
+                    DisplaySpilled();
+                    timerScript.CompleteGame();
+                }
+                else
+                {
+                    UpdateTimeFilled();
+                    SwitchGlasses();
+                }
             }
         }
 
