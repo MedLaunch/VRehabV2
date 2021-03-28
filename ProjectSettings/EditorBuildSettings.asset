@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/HandTrackTesting.unity
     guid: 27106a6c39d3c8547b59e1239bf6e470
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Test_food_scene.unity
     guid: 3309700b394c7a740a92f0a2276c5fa1
   m_configObjects:
