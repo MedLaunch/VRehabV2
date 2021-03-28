@@ -52,7 +52,6 @@ public class TableController : MonoBehaviour {
         outlineRender = outline.GetComponent<SpriteRenderer>();
         objectQueue = GameObject.Find("Foods").GetComponent<ObjectQueue>();
         yHeight = outline.transform.position.y;
-        //RandomizeOutlinePosition();
         originalX = outline.transform.position.x;
         outline.SetActive(false);
         sound = GetComponent<AudioSource>();
@@ -102,7 +101,7 @@ public class TableController : MonoBehaviour {
                 } else {
                     if(justFinishScore){
                         outlineRender.color += new Color(0,0,0,1);
-                        outline.transform.position = originalPosition +  new Vector3(0f, 0.03f, 0f);
+                        outline.transform.position = originalPosition +  new Vector3(0.03f, 0.03f, 0f);
                         outline.transform.localScale = new Vector3(0.25f, 0.6f, 0.1f);
                         outline.SetActive(true);
                         justFinishScore = false;
@@ -166,7 +165,7 @@ public class TableController : MonoBehaviour {
         difficulty = level;
     }
     void ScorePoint(float distance) {
-        score += (int)((1 / distance) * 100);
+        score += (int)((1 / distance));
         pointText.text = "Points: " + score.ToString();
         inScore = true;
         outlineRender.color = Color.green;
@@ -196,13 +195,10 @@ public class TableController : MonoBehaviour {
         } else {
             newCollision = true;
         }
-        Debug.Log(newCollision);
-        Debug.Log(objectQueue.GetCount());
         outlineRender.color = Color.white;
         if(objectQueue.GetCount() % 2 != 0){
             RandomizeOutlinePosition();
         }
-        // currentFood = objectQueue.GetNextObject();
         inScore = false;
         placed = false;
     }
@@ -224,9 +220,11 @@ public class TableController : MonoBehaviour {
 
     public void SetCurrentFood(GameObject food) {
         currentFood = food;
+
     }
     public void SetCurrentFood(){
         currentFood = objectQueue.GetNextObject();
+        Debug.Log("just got next object");
     }
 
     // TODO: change name of function (TranslateOutlinePosition)
@@ -265,12 +263,6 @@ public class TableController : MonoBehaviour {
             } else {
                 currentFood.transform.position = outline.transform.position + left;
             }
-            // currentFood = objectQueue.GetNextObject();
-            // manual for now, remove once plate and food detection occurs
-            // if(objectQueue.GetCount() % 2 == 0){
-            //     RandomizeOutlinePosition();
-            //     currentFood = objectQueue.GetNextObject();
-            // }
         }
     }
 

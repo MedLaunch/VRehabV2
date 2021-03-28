@@ -34,8 +34,6 @@ public class ObjectQueue : MonoBehaviour {
                 i += 1;
             }
         }
-        // TODO: instantiate available plates
-        // availablePlates[i] = Instantiate(child.gameObject);
         getNextObject = objectQ.Count != 0;
     }
 
@@ -49,9 +47,11 @@ public class ObjectQueue : MonoBehaviour {
     public GameObject GetNextObject() {
         if (objectQ.Count != 0) {
             GameObject currObject = objectQ.Dequeue();
-            // Debug.Log(currObject);
-            Debug.Log("Get next object was called");
             currObject.SetActive(true);
+            if(currObject.tag == "Plate"){
+                currObject.transform.position = new Vector3(158.2f, 0.6f, 63.6f);
+            }
+            Debug.Log(currObject.transform.position);
             return currObject;
         } else {
             return null;

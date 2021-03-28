@@ -26,7 +26,7 @@ public class StartFoodPlacement : MonoBehaviour
         tableScript.ToggleOutlineVisibility(true);
         tableScript.SetCurrentFood();
         points.text = "Points: 0";
-        Debug.Log("Set square to visible");   
+        Debug.Log("Set square to visible");
     }
 
     public void Pause(){
