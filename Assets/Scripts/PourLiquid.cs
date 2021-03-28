@@ -49,4 +49,8 @@ public class PourLiquid : MonoBehaviour {
     {
         return totalTimeOut;
     }
+    public void ResetTimer()
+    {
+        totalTimeOut = 0;
+    }
 }

@@ -70,6 +70,8 @@ public class WineController : MonoBehaviour {
     }
 
     public void StartGame() {
+        PourLiquid pourLiquid = GameObject.Find("Wine Bottle").GetComponent<PourLiquid>();
+        pourLiquid.ResetTimer();
         timerScript.StartTimer();
         ResetVariables();
         GameObject[] temp = new GameObject[numGlasses];
