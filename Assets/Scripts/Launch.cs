@@ -66,6 +66,10 @@ public class Launch : MonoBehaviour
         // Calculate the journey length.
         //journeyLength = Vector3.Distance(startMarker.position, endMarker.position);
     }
+    public void StartGame()
+    {
+
+    }
 
     void SetScoreText()
     {
@@ -74,6 +78,10 @@ public class Launch : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
+       if (Input.GetKeyDown(KeyCode.S))  // start game
+        {
+            Start();
+        }
         //if (!lerp)
         //{
         // Launches projectile
