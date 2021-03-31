@@ -22,6 +22,7 @@ public class Launch : MonoBehaviour
     Vector3 launch;
     Vector3 torque;
     bool firstSpawn = false;
+    private Timer timerScript;
 
     AudioSource pointSound;
 
@@ -57,17 +58,29 @@ public class Launch : MonoBehaviour
         newClone = true;
         projectile = clone.GetComponent<Rigidbody>();  // Gets rigidbody of new gameObject clone
         // Keep a note of the time the movement started.
-        //startTime = Time.time;
         scoreText.gameObject.SetActive(true);
         SetScoreText();
         firstSpawn = true;
         pointSound = GetComponent<AudioSource>();
+        timerScript = gameObject.GetComponent<Timer>();
 
         // Calculate the journey length.
         //journeyLength = Vector3.Distance(startMarker.position, endMarker.position);
     }
     public void StartGame()
     {
+        score = 0f;
+        projectile = Horseshoe.GetComponent<Rigidbody>();
+        timerScript.StartTimer();
+        clone = Instantiate(Horseshoe, spawn.position, spawn.rotation);  // Spawns gameObject
+        clone.SetActive(true);  // clone spawns false, set to true each time
+        newClone = true;
+        projectile = clone.GetComponent<Rigidbody>();  // Gets rigidbody of new gameObject clone
+        // Keep a note of the time the movement started.
+        scoreText.gameObject.SetActive(true);
+        SetScoreText();
+        firstSpawn = true;
+
 
     }
 
@@ -80,7 +93,7 @@ public class Launch : MonoBehaviour
     {
        if (Input.GetKeyDown(KeyCode.S))  // start game
         {
-            Start();
+            StartGame();
         }
         //if (!lerp)
         //{
