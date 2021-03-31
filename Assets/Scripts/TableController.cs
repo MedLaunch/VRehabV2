@@ -290,6 +290,7 @@ public class TableController : MonoBehaviour {
         // Reset points
         pointText.text = "Points: 0";
         outline.transform.position = initialPosition;
+        outline.transform.localScale = new Vector3(0.25f, 0.6f, 0.1f);
 
         // Clear all items from scene
         active = GameObject.FindGameObjectsWithTag("active");
