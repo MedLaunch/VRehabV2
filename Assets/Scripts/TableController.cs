@@ -47,12 +47,17 @@ public class TableController : MonoBehaviour {
     private bool newCollision = true;
 
     private Vector3 originalPosition;
+
+    private Vector3 initialPosition;
     private bool justFinishScore = false;
+
+    private GameObject[] active;
     public void Start() {
         outlineRender = outline.GetComponent<SpriteRenderer>();
         objectQueue = GameObject.Find("Foods").GetComponent<ObjectQueue>();
         yHeight = outline.transform.position.y;
         originalX = outline.transform.position.x;
+        initialPosition = outline.transform.position;
         outline.SetActive(false);
         sound = GetComponent<AudioSource>();
     }
@@ -177,8 +182,9 @@ public class TableController : MonoBehaviour {
             StartCoroutine(FadeOut());
             StartCoroutine(Create(temp));
         } else {
+            Debug.Log("In destruction phase");
             temp.SetActive(false);
-            Destroy(temp);
+            // Destroy(temp);
             timerIsRunning = false;
             gameOver = true;
             inScore = false;
@@ -195,6 +201,7 @@ public class TableController : MonoBehaviour {
         } else {
             newCollision = true;
         }
+        temp.tag = "active";
         outlineRender.color = Color.white;
         if(objectQueue.GetCount() % 2 != 0){
             RandomizeOutlinePosition();
@@ -225,6 +232,7 @@ public class TableController : MonoBehaviour {
     public void SetCurrentFood(){
         currentFood = objectQueue.GetNextObject();
         Debug.Log("just got next object");
+        Debug.Log(currentFood);
     }
 
     // TODO: change name of function (TranslateOutlinePosition)
@@ -274,5 +282,19 @@ public class TableController : MonoBehaviour {
             currentFood.SetActive(false);
         }
         outline.SetActive(false);
+        score = 0;
+    }
+
+    public void RestartGame(){
+        // Reset points
+        pointText.text = "Points: 0";
+        outline.transform.position = initialPosition;
+
+        // Clear all items from scene
+        active = GameObject.FindGameObjectsWithTag("active");
+        foreach(GameObject activeObj in active){
+            Destroy(activeObj);
+        }
+
     }
 }

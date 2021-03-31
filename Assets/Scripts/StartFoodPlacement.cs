@@ -19,14 +19,26 @@ public class StartFoodPlacement : MonoBehaviour
 
     private bool waitForPlayer = false;
 
+    private bool restarting = false;
+
     public void Play() {
+        if(!restarting){
+            restarting = true;
+        } else {
+            if(gameStatus != 0){
+                GameOver();
+            }
+            tableScript.RestartGame();
+            timerScript.isPaused = false;
+        }
         timerScript.StartTimer();
         gameStatus = 1;
+        waitForPlayer = false;
         tableScript.SetGameStatus(true);
         tableScript.ToggleOutlineVisibility(true);
         tableScript.SetCurrentFood();
         points.text = "Points: 0";
-        Debug.Log("Set square to visible");
+        
     }
 
     public void Pause(){
@@ -61,9 +73,8 @@ public class StartFoodPlacement : MonoBehaviour
     }
     void Update(){
         // For testing purposes
-        if(Input.GetKeyDown(KeyCode.W)){
+        if(Input.GetKeyDown(KeyCode.LeftArrow)){
             Play();
-            Debug.Log("started game");
         } else if(Input.GetKeyDown(KeyCode.RightArrow)){
             if(timerScript.isPaused){
                 Continue();
@@ -84,6 +95,7 @@ public class StartFoodPlacement : MonoBehaviour
             settingsScript.IncreaseDifficulty();
         } else if(Input.GetKeyDown(KeyCode.Q)){
             tableScript.TestFood();
+            Debug.Log("testing food");
         } else if (Input.GetKeyDown(KeyCode.A)) {
             tableScript.RandomizeOutlinePosition();
         }

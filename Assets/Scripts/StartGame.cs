@@ -19,14 +19,21 @@ public class StartGame : MonoBehaviour
 
     private bool waitForPlayer = false;
 
+    private bool restarting = false;
+
     public void Play() {
+        if(!restarting){
+            restarting = true;
+        } else {
+            tableScript.RestartGame();
+        }
         timerScript.StartTimer();
         gameStatus = 1;
         tableScript.SetGameStatus(true);
         tableScript.ToggleOutlineVisibility(true);
         tableScript.SetCurrentFood();
         points.text = "Points: 0";
-        Debug.Log("Set square to visible");   
+        
     }
 
     public void Pause(){

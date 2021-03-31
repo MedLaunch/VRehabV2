@@ -34,6 +34,7 @@ public class Timer : MonoBehaviour
 
     public void StartTimer() {
         if(time != null) { StopCoroutine(time); }
+        Debug.Log("starting timer again");
         time = _StartTimer();
         StartCoroutine(time);
     }
@@ -71,5 +72,10 @@ public class Timer : MonoBehaviour
     {
         StopCoroutine(time);
         timerText.text = "Time: Done!";
+    }
+
+    public void ResetTimer(){
+        float seconds = Mathf.FloorToInt(defaultTime);
+        timerText.text = "Time: " + seconds.ToString();
     }
 }

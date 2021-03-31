@@ -43,6 +43,7 @@ public class ObjectQueue : MonoBehaviour {
         for(int i = 0; i < food; i = i + 1){
             AddObject();
         }
+        Debug.Log("repopulated queue");
     }
     public GameObject GetNextObject() {
         if (objectQ.Count != 0) {
@@ -51,7 +52,6 @@ public class ObjectQueue : MonoBehaviour {
             if(currObject.tag == "Plate"){
                 currObject.transform.position = new Vector3(158.2f, 0.6f, 63.6f);
             }
-            Debug.Log(currObject.transform.position);
             return currObject;
         } else {
             return null;
