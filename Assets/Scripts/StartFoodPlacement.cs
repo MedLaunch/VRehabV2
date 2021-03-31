@@ -95,7 +95,6 @@ public class StartFoodPlacement : MonoBehaviour
             settingsScript.IncreaseDifficulty();
         } else if(Input.GetKeyDown(KeyCode.Q)){
             tableScript.TestFood();
-            Debug.Log("testing food");
         } else if (Input.GetKeyDown(KeyCode.A)) {
             tableScript.RandomizeOutlinePosition();
         }

@@ -80,6 +80,7 @@ public class TableController : MonoBehaviour {
             currentFood = objectQueue.GetNextObject();
             currentFood.SetActive(false);
             currentFood = objectQueue.GetNextObject();
+            currentFood.SetActive(false);
             if(!currentFood.activeSelf){
                 currentFood.SetActive(false);
             }
