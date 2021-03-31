@@ -46,12 +46,16 @@ public class Launch : MonoBehaviour
     void Start()
     {
         projectile = Horseshoe.GetComponent<Rigidbody>();
+        firstSpawn = true;
 
         launch = new Vector3(x, y, z);
         torque = new Vector3(0, 0.7f, 0);
+        pointSound = GetComponent<AudioSource>();
+        timerScript = gameObject.GetComponent<Timer>();
 
         //Hide original gameObject
         Horseshoe.SetActive(false);
+        /*
         //Start game with clones
         clone = Instantiate(Horseshoe, spawn.position, spawn.rotation);  // Spawns gameObject
         clone.SetActive(true);  // clone spawns false, set to true each time
@@ -60,15 +64,18 @@ public class Launch : MonoBehaviour
         // Keep a note of the time the movement started.
         scoreText.gameObject.SetActive(true);
         SetScoreText();
-        firstSpawn = true;
-        pointSound = GetComponent<AudioSource>();
-        timerScript = gameObject.GetComponent<Timer>();
+        */
 
         // Calculate the journey length.
         //journeyLength = Vector3.Distance(startMarker.position, endMarker.position);
     }
     public void StartGame()
     {
+        if (!firstSpawn)
+        {
+            Destroy(clone);
+            interval = Time.time;
+        }
         score = 0f;
         projectile = Horseshoe.GetComponent<Rigidbody>();
         timerScript.StartTimer();
@@ -80,9 +87,52 @@ public class Launch : MonoBehaviour
         scoreText.gameObject.SetActive(true);
         SetScoreText();
         firstSpawn = true;
-
+        interval = Time.time;
 
     }
+    public void hitGround()
+    {
+        if (Time.time - interval > step) // Current time - Time of last action > spacing time                 
+        {
+            if ((projectile.transform.position - transform.position).sqrMagnitude < (compareDistance))
+            {
+                score += 1.0f;
+                SetScoreText();
+                scoreInterval = Time.time;
+            }
+        
+            StartCoroutine(deleteShoe());
+        }
+        firstSpawn = false;
+    }
+
+    public void hitTarget()
+    {
+        if (Time.time - scoreInterval > stepScoreInit)
+        { // Stops update from overcounting
+
+            // Start step at 0 initially or else a quick score will not register 
+            // (waits stepScoreSet seconds before allowing score to register)
+            if (stepScoreInit == 0) { stepScoreInit = stepScoreSet; }
+            score += 3.0f;
+            SetScoreText();
+            scoreInterval = Time.time;
+            StartCoroutine(deleteShoe());
+        }
+    }
+    private IEnumerator deleteShoe()
+    {
+        notTouched = true;
+        newClone = false;
+        yield return new WaitForSeconds(2);
+        Destroy(clone);
+        interval = Time.time;
+        clone = Instantiate(Horseshoe, spawn.position, spawn.rotation);  // Spawns gameObject
+        clone.SetActive(true); // set gameobject true
+        newClone = true;
+        projectile = clone.GetComponent<Rigidbody>();  // Gets rigidbody of new gameObject clone
+    }
+
 
     void SetScoreText()
     {
@@ -98,11 +148,12 @@ public class Launch : MonoBehaviour
         //if (!lerp)
         //{
         // Launches projectile
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    projectile.AddForce(launch);
-        //    projectile.AddTorque(torque);
-        //}
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            projectile.AddForce(launch);
+            projectile.AddTorque(torque);
+        }
+        /*
         //Creates new projectile for launching
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -150,7 +201,7 @@ public class Launch : MonoBehaviour
                 projectile = clone.GetComponent<Rigidbody>();  // Gets rigidbody of new gameObject clone
             }
             firstSpawn = false;
-        }
+        }*/
 
        /* if (newClone && !firstSpawn)
         {
@@ -188,7 +239,7 @@ public class Launch : MonoBehaviour
         //    }
         //}
     }
-    void OnCollisionEnter(Collision collision)
+  /*  void OnCollisionEnter(Collision collision)
     {
         //pointSound.PlayOneShot(pointSound.clip);
 
@@ -204,5 +255,5 @@ public class Launch : MonoBehaviour
                 notTouched = false;
             }
         }
-    }
+    }*/
 }

@@ -12,6 +12,8 @@ TagManager:
   - lb_groundTarget
   - lb_perchTarget
   - Plate
+  - Stump
+  - Floor
   layers:
   - Default
   - TransparentFX

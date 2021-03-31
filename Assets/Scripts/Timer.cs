@@ -40,6 +40,7 @@ public class Timer : MonoBehaviour
 
     IEnumerator _StartTimer() {
         float currTime = defaultTime;
+        isGameDone = false;
         Debug.Log("curr time: " + currTime);
         while (currTime > 0) {
             if(!isPaused){
