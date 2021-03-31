@@ -9975,7 +9975,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &848598496
 Transform:
   m_ObjectHideFlags: 0
@@ -11181,6 +11181,30 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2315417494952352167, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
+      propertyPath: m_Radius
+      value: 7.630745
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315417494952352167, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
+      propertyPath: m_Height
+      value: 22.75454
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315417494952352167, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
+      propertyPath: m_Center.x
+      value: 3.8466015
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315417494952352167, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
+      propertyPath: m_Center.y
+      value: -4.019477
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315417494952352167, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
+      propertyPath: m_Center.z
+      value: 14.447055
+      objectReference: {fileID: 0}
+    - target: {fileID: 2315417494952352167, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8650216109428876017, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -11387,7 +11411,7 @@ PrefabInstance:
       objectReference: {fileID: 1554651326}
     - target: {fileID: 8650216110342141115, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.654
+      value: 2.5314
       objectReference: {fileID: 0}
     - target: {fileID: 8650216110342141115, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11395,7 +11419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8650216110342141115, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.779
+      value: -1.7604
       objectReference: {fileID: 0}
     - target: {fileID: 8650216110342141115, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
       propertyPath: m_LocalRotation.x
@@ -11634,6 +11658,7 @@ PrefabInstance:
     - {fileID: 8650216110342141112, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
     - {fileID: 8650216110342141118, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
     - {fileID: 1001715310975089742, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
+    - {fileID: 2315417494952352167, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
 --- !u!4 &1083038048 stripped
 Transform:
@@ -11645,20 +11670,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8650216110342141105, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
   m_PrefabInstance: {fileID: 1083038047}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &1083038050
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1083038049}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1554651326}
 --- !u!65 &1083038051
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11668,7 +11679,7 @@ BoxCollider:
   m_GameObject: {fileID: 1083038049}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 12.391761, y: 0.6763594, z: 32.67849}
   m_Center: {x: 4.6578417, y: 0.33817613, z: 13.714075}
@@ -11768,6 +11779,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1083038059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083038049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
 --- !u!1 &1084574331
 GameObject:
   m_ObjectHideFlags: 0
@@ -20383,7 +20411,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh17752
+  m_Name: pb_Mesh142646
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -21582,18 +21610,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 869899888}
-        m_TargetAssemblyTypeName: Launch, Assembly-CSharp
-        m_MethodName: StartGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 224262775}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -21610,6 +21626,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 869899888}
+        m_TargetAssemblyTypeName: Launch, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -22528,7 +22556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.x
