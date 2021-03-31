@@ -10099,6 +10099,8 @@ GameObject:
   - component: {fileID: 869899890}
   - component: {fileID: 869899889}
   - component: {fileID: 869899888}
+  - component: {fileID: 869899893}
+  - component: {fileID: 869899892}
   m_Layer: 0
   m_Name: Target
   m_TagString: Target
@@ -10201,6 +10203,35 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 869899886}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &869899892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869899886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64491629326811a4884fe435a903e9f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: {fileID: 52003011}
+--- !u!114 &869899893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869899886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d08e8975850d4dd8a08cdb8fbe7e770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultTime: 30
+  timerText: {fileID: 1539806813}
+  isPaused: 0
+  isGameDone: 0
 --- !u!1 &891681373 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 6f0a4d48fa5ef4b43a409c7ba4089943, type: 3}
