@@ -11436,6 +11436,14 @@ PrefabInstance:
       propertyPath: m_EditMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8650216110342141110, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
+      propertyPath: m_Mass
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 8650216110342141110, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8650216110342141111, guid: 396e475e23dc9b14a8821d18b4b7507a, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -20460,7 +20468,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh55754
+  m_Name: pb_Mesh52666
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
