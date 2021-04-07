@@ -59,6 +59,7 @@ public class StartFoodPlacement : MonoBehaviour
     
     public void GameOver(){
         gameStatus = 0;
+        Debug.Log("Game is over");
         tableScript.SetGameStatus(false);
         timerScript.isPaused = true;
         tableScript.ResetGame();

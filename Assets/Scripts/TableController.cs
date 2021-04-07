@@ -209,6 +209,10 @@ public class TableController : MonoBehaviour {
         }
         inScore = false;
         placed = false;
+        if(currentFood == null){
+            timerIsRunning = false;
+            gameOver = true;
+        }
     }
 
     IEnumerator FadeOut(){
