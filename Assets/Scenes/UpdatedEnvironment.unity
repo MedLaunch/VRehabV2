@@ -10141,7 +10141,8 @@ MonoBehaviour:
   scoreText: {fileID: 1547191493}
   spawn: {fileID: 846961756}
   Horseshoe: {fileID: 1083038049}
-  compareDistance: 5
+  compareDistanceOuter: 3
+  compareDistanceInner: 1.5
   speed: 1.25
   score: 0
 --- !u!136 &869899889
@@ -20468,7 +20469,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh52666
+  m_Name: pb_Mesh17896
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -22617,7 +22618,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 152.0792
+      value: 154.888
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22625,7 +22626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 62.77
+      value: 59.826
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalRotation.x

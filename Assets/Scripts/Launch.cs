@@ -29,7 +29,8 @@ public class Launch : MonoBehaviour
     // Transforms to act as start and end markers for the journey.
     //public Transform startMarker;
     //public Transform endMarker;
-    public float compareDistance = 0f;
+    public float compareDistanceOuter = 3f;
+    public float compareDistanceInner = 1.5f;
 
     // Movement speed in units per second.
     public float speed = 1.25F;
@@ -94,13 +95,18 @@ public class Launch : MonoBehaviour
     {
         if (Time.time - interval > step) // Current time - Time of last action > spacing time                 
         {
-            if ((projectile.transform.position - transform.position).sqrMagnitude < (compareDistance))
+            if ((projectile.transform.position - transform.position).sqrMagnitude < (compareDistanceOuter))
             {
                 score += 1.0f;
                 SetScoreText();
                 scoreInterval = Time.time;
+                if ((projectile.transform.position - transform.position).sqrMagnitude < (compareDistanceInner))
+                {
+                    score += 1.0f;
+                    SetScoreText();
+                    scoreInterval = Time.time;
+                }
             }
-        
             StartCoroutine(deleteShoe());
         }
         firstSpawn = false;
