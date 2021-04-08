@@ -110,6 +110,8 @@ public class WineController : MonoBehaviour {
         PourLiquid pourLiquid = GameObject.Find("Wine Bottle").GetComponent<PourLiquid>();
         float lout = Mathf.Round(pourLiquid.GetTimeOut() * 100.0f) * 0.01f;
         float lin = Mathf.Round(totalTimeFilled * 100.0f) * 0.01f;
+        lin = lout - 1.28f;
+        //float lin = duration * 3 * numGlasses;
         spilled.text = "Spilled: " + lin.ToString() + " / " + lout.ToString();
     }
 

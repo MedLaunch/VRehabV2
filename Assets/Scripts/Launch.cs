@@ -120,7 +120,7 @@ public class Launch : MonoBehaviour
             // Start step at 0 initially or else a quick score will not register 
             // (waits stepScoreSet seconds before allowing score to register)
             if (stepScoreInit == 0) { stepScoreInit = stepScoreSet; }
-            score += 3.0f;
+            score += 1.0f;
             SetScoreText();
             scoreInterval = Time.time;
             StartCoroutine(deleteShoe());
